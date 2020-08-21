@@ -1,10 +1,29 @@
 @import url(./__logo/header__logo.css);
 
 .header {
-	margin: 45px auto 0 auto;
-	height: 74px;
+	margin: 28px 0 0 0;
+	padding: 0 27px;
+	height: 56px;
 	border-bottom: 1px solid rgb(84, 84, 84, .7);
 }
 
 
+@media screen and (min-width: 525px) {
+	
+	.header {
+		margin: 28px 27px 0 27px; /* instead of auto margins on side, this keeps some space on either side at medium resolutions */
+		padding: 0;
+	}
+	
+}
+
+
+@media screen and (min-width: 768px) {
+
+	.header {
+		margin: 45px 44px 0 44px;
+		height: 74px;
+	}
+
+}
 
