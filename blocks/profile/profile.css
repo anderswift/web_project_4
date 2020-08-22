@@ -4,6 +4,7 @@
 @import url(./__edit-info/profile__edit-info.css);
 @import url(./__add-image/profile__add-image.css);
 
+
 .profile {
 	margin: 42px 19px 0 19px;
 	display: flex;
@@ -21,17 +22,11 @@
 }
 
 
-
 @media screen and (min-width: 768px) {
 
 	.profile {
 		margin: 40px 44px 0 44px;
 		flex-direction: row;
-	}
-
-	
-	.profile-info {
-		flex-grow: 100;
 	}
 	
 }
