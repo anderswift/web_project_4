@@ -13,4 +13,4 @@
 @import url(../blocks/photo-grid/photo-grid.css);
 @import url(../blocks/photo/photo.css);
 
-footer { display:none; }
+@import url(../blocks/footer/footer.css);
