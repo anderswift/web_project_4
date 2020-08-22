@@ -1,20 +1,33 @@
 
 .photo-grid {
-		margin: 36px auto 48px auto;
-		display: grid;
-		grid-template-columns: 282px;
-		grid-template-rows: auto;
-		row-gap: 20px;
-	}
+	width: 282px;
+	margin: 36px auto 48px auto;
+	display: grid;
+	grid-template-columns: 282px;
+	grid-template-rows: auto;
+	row-gap: 20px;
+}
 
 
-
-@media screen and (min-width: 768px) { 
+@media screen and (min-width: 618px) { 
 
 	.photo-grid {
+		width: 582px;
 		margin: 50px auto 66px auto;
-		grid-template-columns: 282px 282px 282px;
+		grid-template-columns: 282px 282px;
 		gap: 21px 18px;
+	}
+
+}
+
+
+
+
+@media screen and (min-width: 918px) { 
+
+	.photo-grid {
+		width: 882px;
+		grid-template-columns: 282px 282px 282px;
 	}
 
 }

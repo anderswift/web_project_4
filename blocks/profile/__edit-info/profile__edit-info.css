@@ -23,10 +23,10 @@
 }
 
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 918px) {
 	
 	.profile__edit-info {
-		right: -55px;
+		right: -57px;
 	}
 	
 }

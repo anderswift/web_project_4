@@ -5,7 +5,7 @@
 }
 
 
-@media screen and (min-width: 480px) and (max-width: 767px) {
+@media screen and (min-width: 480px) and (max-width: 917px) {
 	
 	.profile__avatar {
 		width: 200px;
@@ -15,7 +15,7 @@
 }
 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 918px) {
 	
 	.profile__avatar {
 		margin-right: 30px;

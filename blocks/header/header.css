@@ -11,17 +11,17 @@
 @media screen and (min-width: 480px) {
 	
 	.header {
-		margin: 28px 27px 0 27px; /* instead of auto margins on side, this keeps some space on either side at medium resolutions */
+		margin: 28px 28px 0 28px; /* instead of auto margins on side, this keeps some space on either side at medium resolutions */
 		padding: 0;
 	}
 	
 }
 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 918px) {
 
 	.header {
-		margin: 45px 44px 0 44px;
+		margin: 45px 18px 0 18px;
 		height: 74px;
 	}
 

@@ -16,16 +16,15 @@
 @media screen and (min-width: 480px) {
 	
 	.profile {
-		margin: 42px 27px 0 27px;
+		margin: 40px 18px 0 18px;
 	}
 	
 }
 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 918px) {
 
 	.profile {
-		margin: 40px 44px 0 44px;
 		flex-direction: row;
 	}
 	
