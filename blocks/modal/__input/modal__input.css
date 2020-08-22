@@ -1,0 +1,29 @@
+.modal__input {
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 14px;
+	line-height: 17px;
+	color: #000; 
+	border: none;
+	outline: none;
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	margin: 30px 0 0 0;
+	padding: 0 0 10px 0;
+	transition: border-color 250ms ease-out;
+}
+
+.modal__input:hover, .modal__input:focus {
+	border-color: rgba(0, 0, 0, .8);
+}
+
+.modal__input::-webkit-input-placeholder {
+	color: rgba(0, 0, 0, .3);
+}
+
+.modal__input:-ms-input-placeholder {
+	color: rgba(0, 0, 0, .3);
+}
+
+.modal__input::placeholder {
+	color: rgba(0, 0, 0, .3);
+}

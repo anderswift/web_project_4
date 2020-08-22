@@ -1,0 +1,17 @@
+@import url(./__form/modal__form.css);
+@import url(./__heading/modal__heading.css);
+@import url(./__input/modal__input.css);
+@import url(./__button/modal__button.css);
+@import url(./__button/_disabled/modal__button_disabled.css);
+@import url(./__exit/modal__exit.css);
+
+.modal:before {
+	content: "";
+	display: block;
+	background: rgba(0, 0, 0, .5);
+	position: fixed; 
+	top: 0;
+	width: 100%;
+	left: 0;
+	height: 100%;
+}

@@ -1,0 +1,19 @@
+.modal__exit {
+	display: block;
+	position: absolute;
+	top: -40px;
+	right: 0;
+	background: url(../../../images/exit.svg) 50% 50% no-repeat;
+	width: 35px;
+	height: 35px;
+}
+
+
+@media screen and (min-width: 515px) {
+	
+	.modal__exit {
+		top: -35px;
+		right: -35px;
+	}
+	
+}

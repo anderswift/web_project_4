@@ -1,0 +1,19 @@
+.modal__button {
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 18px;
+	line-height: 22px;
+	background: #000; 
+	color: #fff; 
+	border: none;
+	outline: none;
+	margin: 48px 0 0 0;
+	padding: 13px 0 14px 0;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+
+.modal__button:hover, .modal__button:focus {
+	opacity: .8;
+}

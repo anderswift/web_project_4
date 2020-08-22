@@ -14,3 +14,6 @@
 @import url(../blocks/photo/photo.css);
 
 @import url(../blocks/footer/footer.css);
+
+@import url(../blocks/modal/modal.css);
+@import url(../blocks/modal/_hidden/modal_hidden.css);
