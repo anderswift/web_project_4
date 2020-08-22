@@ -1,0 +1,32 @@
+.profile__edit-info {
+	position: absolute; 
+	display: block;
+	width: 16px;
+	height: 16px;
+	border: 1px solid #fff;
+	background: url(../../../images/edit.svg) 50% 50% no-repeat;
+	background-size: 8px 8px;
+	right: -34px;
+	top: calc(50% - 9px);
+}
+
+
+@media screen and (min-width: 480px) {
+	
+	.profile__edit-info {
+		width: 21px;
+		height: 21px;
+		right: -38px;
+		background-size: 10px 10px;
+	}
+	
+}
+
+
+@media screen and (min-width: 900px) {
+	
+	.profile__edit-info {
+		right: -55px;
+	}
+	
+}

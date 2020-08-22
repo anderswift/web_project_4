@@ -8,7 +8,7 @@
 }
 
 
-@media screen and (min-width: 525px) {
+@media screen and (min-width: 480px) {
 	
 	.header {
 		margin: 28px 27px 0 27px; /* instead of auto margins on side, this keeps some space on either side at medium resolutions */
