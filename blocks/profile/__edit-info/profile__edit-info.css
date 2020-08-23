@@ -7,7 +7,7 @@
 	background: url(../../../images/edit.svg) 50% 50% no-repeat;
 	background-size: 8px 8px;
 	right: -34px;
-	top: calc(50% - 9px);
+	top: 34px;
 }
 
 
@@ -16,7 +16,8 @@
 	.profile__edit-info {
 		width: 21px;
 		height: 21px;
-		right: -38px;
+		top: 45px;
+		right: -42px;
 		background-size: 10px 10px;
 	}
 	
@@ -26,7 +27,8 @@
 @media screen and (min-width: 918px) {
 	
 	.profile__edit-info {
-		right: -57px;
+		top: 20px;
+		right: -56px;
 	}
 	
 }
