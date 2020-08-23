@@ -1,16 +1,17 @@
-# Project 4: Around The U.S.
+# "Around the U.S." 
+## Project 4 of Yandex Practicum Web Development
+[View website online on Github Pages](https://anderswift.github.io/web_project_4/)
 
-### Overview
+### Project Description:
+This project has a responsive layout that displays a profile and photo gallery, with a script to allow a user to edit the page.
+The website was built using HTML5, CSS and JavaScript. It incorporates:
 
-* Figma
-* Images
+* BEM Methodology
+* Flexbox
+* CSS Grids
+* CSS transitions
+* Mobile-First Responsive Design
+* Embedded custom fonts
+* JavaScript-powered interactive form
 
-**Figma**
-
-* [Link to the project in Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
-
-**Images**
-
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-
-Have fun with JavaScript!
+This site was created based on a [mockup designed in Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1).
