@@ -5,8 +5,8 @@ let profileAbout= profile.querySelector(".profile__about");
 
 let modal= document.querySelector(".modal");
 let modalForm= modal.querySelector(".modal__form");
-let modalName= modal.querySelector(".modal__input_name");
-let modalAbout= modal.querySelector(".modal__input_about");
+let modalName= modal.querySelector(".modal__input_type_name");
+let modalAbout= modal.querySelector(".modal__input_type_about");
 let exitButton= modal.querySelector(".modal__exit");
 
 

@@ -1,5 +1,7 @@
 .button {
   transition: opacity .25s ease-in-out;
+	border: none;
+	outline: none;
 }
 
 .button:hover, .button:focus {
