@@ -2,8 +2,13 @@
 	font-weight: 500;
 	font-size: 22px;
 	line-height: 56px;
-	margin: 14px auto 0;
-	position: relative;
+	margin: 0;
+	text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+	max-width: 240px;
+	padding-left: 36px;
+	box-sizing: border-box;
 }
 
 
@@ -11,9 +16,17 @@
 	
 	.profile__name {
 		font-size: 32px;
-		margin: 26px auto 4px; /* looks about right for transition sizes between breakpoints */
+		margin: 0 0 4px;
+		max-width: 400px;
+		padding-left: 45px;
 	}
 	
+}
+
+@media screen and (min-width: 618px) {
+	.profile__name {
+		max-width: 490px;
+	}
 }
 
 
@@ -21,9 +34,7 @@
 	
 	.profile__name {
 		font-size: 42px;
-		margin: 0 0 4px 0;
-		/* Despite the numbers being different, this is the margin that looks most like mockup. The alignment of text in the line-height of this element
-		 * is not the same in browser vs. figma at all. */
+		padding-left: 0;
 	}
 	
 }

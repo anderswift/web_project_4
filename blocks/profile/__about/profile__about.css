@@ -3,7 +3,11 @@
 	line-height: 17px;
 	text-align: center;
 	font-weight: 400; 
-	margin: 0; 
+	margin: 0;
+	text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+	flex-basis: 100%;
 }
 
 
@@ -15,6 +19,14 @@
 	}
 	
 }
+
+
+@media screen and (min-width: 618px) {
+	.profile__about {
+		max-width: 570px;
+	}
+}
+
 
 
 @media screen and (min-width: 918px) {
