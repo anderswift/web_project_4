@@ -2,6 +2,7 @@
   transition: opacity .25s ease-in-out;
 	border: none;
 	outline: none;
+	cursor: pointer;
 }
 
 .button:hover, .button:focus {
