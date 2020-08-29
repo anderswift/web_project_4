@@ -5,13 +5,12 @@
 @import url(./__button/_disabled/modal__button_disabled.css);
 @import url(./__exit/modal__exit.css);
 
-.modal:before {
-	content: "";
-	display: block;
+.modal {
 	background: rgba(0, 0, 0, .5);
 	position: fixed; 
 	top: 0;
 	width: 100%;
 	left: 0;
 	height: 100%;
+	display: flex;
 }
