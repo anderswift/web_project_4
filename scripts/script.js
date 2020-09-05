@@ -1,38 +1,60 @@
-let profile= document.querySelector('.profile');
-let editInfoButton= profile.querySelector(".profile__edit-info");
-let profileName= profile.querySelector(".profile__name");
-let profileAbout= profile.querySelector(".profile__about");
+const profile= document.querySelector('.profile');
+const editInfoButton= profile.querySelector(".profile__edit-info");
+const profileName= profile.querySelector(".profile__name");
+const profileAbout= profile.querySelector(".profile__about");
+const addImageButton= profile.querySelector(".profile__add-image");
 
-let modal= document.querySelector(".modal");
-let modalForm= modal.querySelector(".modal__form");
-let modalName= modal.querySelector(".modal__input_type_name");
-let modalAbout= modal.querySelector(".modal__input_type_about");
-let exitButton= modal.querySelector(".modal__exit");
+const modal= document.querySelector(".modal");
+const exitButtons= modal.querySelectorAll(".modal__exit");
+
+const profileForm= modal.querySelector(".modal__form_profile");
+const profileFormName= profileForm.querySelector(".modal__input_type_name");
+const profileFormAbout= profileForm.querySelector(".modal__input_type_about");
+
+const photoForm= modal.querySelector(".modal__form_photo");
+const photoFormPlace= photoForm.querySelector(".modal__input_type_place");
+const photoFormImage= photoForm.querySelector(".modal__input_type_imgsrc");
 
 
-function openProfileForm() {
-	modalName.value= profileName.textContent;
-	modalAbout.value= profileAbout.textContent;
-	
+function openModal(form) {
+	let active= modal.querySelector(".modal__form_active");
+	if(active) active.classList.remove("modal__form_active");
+	form.classList.add('modal__form_active');
 	modal.classList.remove('modal_hidden');
 }
 
 
-function exitProfileForm() {
+function openProfileForm() {
+	profileFormName.value= profileName.textContent;
+	profileFormAbout.value= profileAbout.textContent;
+	
+	openModal(profileForm);
+}
+
+function openPhotoForm() {
+	openModal(photoForm);
+}
+
+
+function exitForm() {
 	modal.classList.add('modal_hidden');
 }
 
 
-function formSubmitHandler(e) {
+function profileSubmitHandler(e) {
 	e.preventDefault(); 
 	
-	profileName.textContent= modalName.value;
-	profileAbout.textContent= modalAbout.value;
+	profileName.textContent= profileFormName.value;
+	profileAbout.textContent= profileFormAbout.value;
 	
-	exitProfileForm();
+	exitForm();
 }
 
 
 editInfoButton.addEventListener("click", openProfileForm);
-exitButton.addEventListener("click", exitProfileForm);
-modalForm.addEventListener('submit', formSubmitHandler);
+addImageButton.addEventListener("click", openPhotoForm);
+
+exitButtons.forEach((button) => {
+	button.addEventListener("click", exitForm);
+});
+profileForm.addEventListener('submit', profileSubmitHandler);
