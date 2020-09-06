@@ -27,7 +27,8 @@ const initialCards = [
   { name: "Lago di Braies", link: "https://code.s3.yandex.net/web-code/lago.jpg" }
 ];
 
-function addCard(cardObj) {
+function addPhotoCard(cardObj, prepend= true) {
+	
 	// clone template for photo card 
 	let newPhoto= photoTemplate.cloneNode(true);
 	
@@ -35,10 +36,19 @@ function addCard(cardObj) {
 	newPhoto.querySelector(".photo__caption").textContent= cardObj.name;
 	newPhoto.querySelector(".photo__image").src= cardObj.link;
 	newPhoto.querySelector(".photo__image").alt= cardObj.name;
+	
+	// add like event to button
+	newPhoto.querySelector(".photo__like").addEventListener("click", (e) => {
+		e.target.classList.toggle("photo__like_on");
+		e.target.blur();
+	});
 
 	// add photo to DOM
-	photoContainer.append(newPhoto);
+	if (prepend) photoContainer.prepend(newPhoto);
+	else photoContainer.append(newPhoto);
+	
 }
+
 
 function openModal(form) {
 	let active= modal.querySelector(".modal__form_active");
@@ -74,6 +84,18 @@ function profileSubmitHandler(e) {
 	exitForm();
 }
 
+function photoSubmitHandler(e) {
+	e.preventDefault(); 
+	
+	const cardObj= [];
+	cardObj.name= photoFormPlace.value;
+	cardObj.link= photoFormImage.value;
+	
+	addPhotoCard(cardObj);
+	
+	exitForm();
+}
+
 
 editInfoButton.addEventListener("click", openProfileForm);
 addImageButton.addEventListener("click", openPhotoForm);
@@ -81,8 +103,10 @@ addImageButton.addEventListener("click", openPhotoForm);
 exitButtons.forEach((button) => {
 	button.addEventListener("click", exitForm);
 });
+
 profileForm.addEventListener('submit', profileSubmitHandler);
+photoForm.addEventListener('submit', photoSubmitHandler);
 
 initialCards.forEach((item) => {
-	addCard(item);
+	addPhotoCard(item, false);
 });
