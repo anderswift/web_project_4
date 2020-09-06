@@ -17,5 +17,8 @@
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_hidden/popup_hidden.css);
+@import url(../blocks/popup/_dark/popup_dark.css);
 
 @import url(../blocks/modal/modal.css);
+
+@import url(../blocks/photo-viewer/photo-viewer.css);

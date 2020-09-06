@@ -1,5 +1,6 @@
 @import url(./__item/popup__item.css);
 @import url(./__item/_active/popup__item_active.css);
+@import url(./__exit/popup__exit.css);
 
 .popup {
 	background: rgba(0, 0, 0, .5);

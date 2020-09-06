@@ -1,4 +1,4 @@
-.modal__exit {
+.popup__exit {
 	display: block;
 	position: absolute;
 	top: -40px;
@@ -11,7 +11,7 @@
 
 @media screen and (min-width: 515px) {
 	
-	.modal__exit {
+	.popup__exit {
 		top: -35px;
 		right: -35px;
 	}
