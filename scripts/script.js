@@ -10,6 +10,8 @@ const photoTemplate= document.querySelector('#photo-template').content;
 const popup= document.querySelector(".popup");
 const exitButtons= popup.querySelectorAll(".popup__exit");
 const photoViewer= popup.querySelector(".photo-viewer");
+const photoViewerImage= photoViewer.querySelector(".photo-viewer__image");
+const photoViewerCaption= photoViewer.querySelector(".photo-viewer__caption");
 
 const profileForm= popup.querySelector(".modal_form_profile");
 const profileFormName= profileForm.querySelector(".modal__input_type_name");
@@ -31,15 +33,20 @@ const initialCards = [
 function addPhotoCard(cardObj, prepend= true) {
 	
 	// clone template for photo card 
-	let newPhoto= photoTemplate.cloneNode(true);
+	const newPhoto= photoTemplate.cloneNode(true);
+	const newImage= newPhoto.querySelector(".photo__image");
 	
-	// add details from object parameter
+	// add image src, alt and event listener for popup viewer
+	newImage.src= cardObj.link;
+	newImage.alt= cardObj.name;
+	newImage.addEventListener("click", (e) => {
+		e.preventDefault();
+		openPhotoViewer(cardObj.link, cardObj.name);
+	});
+	
+	
+	// add caption content
 	newPhoto.querySelector(".photo__caption").textContent= cardObj.name;
-	newPhoto.querySelector(".photo__image").src= cardObj.link;
-	newPhoto.querySelector(".photo__image").alt= cardObj.name;
-	
-	// add photo preview event to image
-	
 	
 	// add like event to button
 	newPhoto.querySelector(".photo__like").addEventListener("click", (e) => {
@@ -85,8 +92,12 @@ function openPhotoForm() {
 	openPopup(photoForm);
 }
 
-function openPhotoViewer(imageSrc) {
+function openPhotoViewer(imageSrc, caption) {
 	//load photo into viewer
+	photoViewerImage.src= imageSrc;
+	photoViewerImage.alt= caption;
+	photoViewerCaption.textContent= caption;
+	
 	openPopup(photoViewer, true);
 }
 
