@@ -50,7 +50,7 @@
 	
 	
 	
-	<div class="popup popup_hidden">
+	<div class="popup popup_hidden popup_dark">
 		
 		<form name="profile-form" class="popup__item modal modal_form_profile">
 			
@@ -61,7 +61,7 @@
 			
 			<button type="submit" class="button modal__button modal__button_type_save" name="profile-submit">Save</button>
 			
-			<button type="button" class="modal__exit button" aria-label="Close Profile Form"></button>
+			<button type="button" class="popup__exit button" aria-label="Close Profile Form"></button>
 		</form>
 		
 		
@@ -74,8 +74,14 @@
 			
 			<button type="submit" class="button modal__button modal__button_type_create" name="photo-submit">Create</button>
 			
-			<button type="button" class="modal__exit button" aria-label="Close Photo Form"></button>
+			<button type="button" class="popup__exit button" aria-label="Close Photo Form"></button>
 		</form>
+		
+		<div class="popup__item photo-viewer">
+			<img class="photo-viewer__image" src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg">
+			<p class="photo-viewer__caption">Hello, here is a caption</p>
+			<button type="button" class="popup__exit photo-viewer__exit button" aria-label="Close Photo Form"></button>
+		</div>
 		
 	</div>
 	
