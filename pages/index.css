@@ -15,5 +15,7 @@
 
 @import url(../blocks/footer/footer.css);
 
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_hidden/popup_hidden.css);
+
 @import url(../blocks/modal/modal.css);
-@import url(../blocks/modal/_hidden/modal_hidden.css);

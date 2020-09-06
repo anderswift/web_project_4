@@ -7,14 +7,14 @@ const addImageButton= profile.querySelector(".profile__add-image");
 const photoContainer= document.querySelector('.photo-grid__list');
 const photoTemplate= document.querySelector('#photo-template').content;
 
-const modal= document.querySelector(".modal");
-const exitButtons= modal.querySelectorAll(".modal__exit");
+const popup= document.querySelector(".popup");
+const exitButtons= popup.querySelectorAll(".modal__exit");
 
-const profileForm= modal.querySelector(".modal__form_profile");
+const profileForm= popup.querySelector(".modal_form_profile");
 const profileFormName= profileForm.querySelector(".modal__input_type_name");
 const profileFormAbout= profileForm.querySelector(".modal__input_type_about");
 
-const photoForm= modal.querySelector(".modal__form_photo");
+const photoForm= popup.querySelector(".modal_form_photo");
 const photoFormPlace= photoForm.querySelector(".modal__input_type_place");
 const photoFormImage= photoForm.querySelector(".modal__input_type_imgsrc");
 
@@ -51,10 +51,10 @@ function addPhotoCard(cardObj, prepend= true) {
 
 
 function openModal(form) {
-	let active= modal.querySelector(".modal__form_active");
-	if(active) active.classList.remove("modal__form_active");
-	form.classList.add('modal__form_active');
-	modal.classList.remove('modal_hidden');
+	let active= popup.querySelector(".popup__item_active");
+	if(active) active.classList.remove("popup__item_active");
+	form.classList.add('popup__item_active');
+	popup.classList.remove('popup_hidden');
 }
 
 
@@ -71,7 +71,7 @@ function openPhotoForm() {
 
 
 function exitForm() {
-	modal.classList.add('modal_hidden');
+	popup.classList.add('popup_hidden');
 }
 
 
