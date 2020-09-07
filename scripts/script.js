@@ -1,3 +1,4 @@
+// load all DOM elements objects that will be worked with repeatedly
 const profile= document.querySelector('.profile');
 const editInfoButton= profile.querySelector(".profile__edit-info");
 const profileName= profile.querySelector(".profile__name");
@@ -21,6 +22,8 @@ const photoForm= popup.querySelector(".modal_form_photo");
 const photoFormPlace= photoForm.querySelector(".modal__input_type_place");
 const photoFormImage= photoForm.querySelector(".modal__input_type_imgsrc");
 
+
+// initial set of photo cards, to be loaded dynamically
 const initialCards = [
   { name: "Yosemite Valley", link: "https://code.s3.yandex.net/web-code/yosemite.jpg" },
   { name: "Lake Louise", link: "https://code.s3.yandex.net/web-code/lake-louise.jpg" },
@@ -30,20 +33,25 @@ const initialCards = [
   { name: "Lago di Braies", link: "https://code.s3.yandex.net/web-code/lago.jpg" }
 ];
 
+
+/* function: adds a photo card to .photo-grid__list
+ * parameters:
+ * 	cardObj (object) - contains data for image src and caption
+ * 	prepend (boolean) - indicates whether to prepend card to beginning of list (default) or add at the end
+*/
 function addPhotoCard(cardObj, prepend= true) {
 	
 	// clone template for photo card 
 	const newPhoto= photoTemplate.cloneNode(true);
 	const newImage= newPhoto.querySelector(".photo__image");
 	
-	// add image src, alt and event listener for popup viewer
+	// add image src, alt, and event listener for popup viewer
 	newImage.src= cardObj.link;
 	newImage.alt= cardObj.name;
 	newImage.addEventListener("click", (e) => {
 		e.preventDefault();
 		openPhotoViewer(cardObj.link, cardObj.name);
 	});
-	
 	
 	// add caption content
 	newPhoto.querySelector(".photo__caption").textContent= cardObj.name;
@@ -54,16 +62,25 @@ function addPhotoCard(cardObj, prepend= true) {
 		e.target.blur();
 	});
 	
+	// add like event to button
+	newPhoto.querySelector(".photo__delete").addEventListener("click", (e) => {
+		e.target.parentNode.remove();
+	});
 	
-
-	// add photo to DOM
+	// add the photo to the DOM
 	if (prepend) photoContainer.prepend(newPhoto);
 	else photoContainer.append(newPhoto);
-	
 }
 
 
+
+/* function: opens a popup, making .popup and the active .popup__item visible
+ * parameters:
+ * 	item (DOM element) - indicates to the specific .popup__item to be made active
+ * 	dark (boolean) - indicates whether to add .popup_dark class to make a 90% black overlay, vs. the default 50% black overlay
+*/
 function openPopup(item, dark= false) {
+	
 	// add class for darker overlay if necessary
 	if (!dark) popup.classList.remove('popup_dark');
 	else if(!popup.classList.contains('popup_dark')) popup.classList.add('popup_dark');
@@ -78,7 +95,12 @@ function openPopup(item, dark= false) {
 }
 
 
+
+/* function:
+ * opens the profile edit form, calling openPopup()
+*/
 function openProfileForm() {
+
 	// load the existing content values into the form
 	profileFormName.value= profileName.textContent;
 	profileFormAbout.value= profileAbout.textContent;
@@ -87,12 +109,25 @@ function openProfileForm() {
 	openPopup(profileForm);
 }
 
+
+
+/* function:
+ * opens the add photo form, calling openPopup()
+*/
 function openPhotoForm() {
 	// fade in the profile form modal
 	openPopup(photoForm);
 }
 
+
+
+/* function: opens the photo viewer, calling openPopup()
+ * parameters:
+ * 	imageSrc (string) - the image src link
+ * 	caption (string) - the caption
+*/
 function openPhotoViewer(imageSrc, caption) {
+	
 	//load photo into viewer
 	photoViewerImage.src= imageSrc;
 	photoViewerImage.alt= caption;
@@ -102,33 +137,20 @@ function openPhotoViewer(imageSrc, caption) {
 }
 
 
+
+/* function:
+ * closes any popup
+*/
 function exitPopup() {
 	popup.classList.add('popup_hidden');
 }
 
 
-function profileSubmitHandler(e) {
-	e.preventDefault(); 
 	
-	profileName.textContent= profileFormName.value;
-	profileAbout.textContent= profileFormAbout.value;
-	
-	exitPopup();
-}
 
-function photoSubmitHandler(e) {
-	e.preventDefault(); 
-	
-	const cardObj= [];
-	cardObj.name= photoFormPlace.value;
-	cardObj.link= photoFormImage.value;
-	
-	addPhotoCard(cardObj);
-	
-	exitPopup();
-}
-
-
+/*
+ * add click events to connect buttons to functions that open and close popups
+*/
 editInfoButton.addEventListener("click", openProfileForm);
 addImageButton.addEventListener("click", openPhotoForm);
 
@@ -136,9 +158,37 @@ exitButtons.forEach((button) => {
 	button.addEventListener("click", exitPopup);
 });
 
-profileForm.addEventListener('submit', profileSubmitHandler);
-photoForm.addEventListener('submit', photoSubmitHandler);
 
+
+/*
+ * add submit events to profile and photo form
+*/
+profileForm.addEventListener('submit', (e) => {
+	e.preventDefault(); 
+	
+	// update text content in profile with new data entered into form
+	profileName.textContent= profileFormName.value;
+	profileAbout.textContent= profileFormAbout.value;
+	
+	exitPopup();
+});
+
+
+photoForm.addEventListener('submit', (e) => {
+	e.preventDefault(); 
+	
+	// run addPhotoCard() to add a photo card to the DOM with the data entered into form
+	const cardObj= [];
+	cardObj.name= photoFormPlace.value;
+	cardObj.link= photoFormImage.value;
+	addPhotoCard(cardObj);
+	
+	exitPopup();
+});
+
+
+
+// populate .photo-grid__list with initial array of photos and captions
 initialCards.forEach((item) => {
 	addPhotoCard(item, false);
 });
