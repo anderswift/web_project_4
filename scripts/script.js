@@ -63,6 +63,11 @@ function addPhotoCard(cardObj, prepend= true) {
 		e.target.blur();
 	});
 	
+	// add like event to button
+	newPhoto.querySelector(".photo__delete").addEventListener("click", (e) => {
+		e.target.parentNode.remove();
+	});
+	
 	// add the photo to the DOM
 	if (prepend) photoContainer.prepend(newPhoto);
 	else photoContainer.append(newPhoto);
