@@ -12,6 +12,7 @@ The website was built using HTML5, CSS and JavaScript. It incorporates:
 * CSS transitions
 * Mobile-First Responsive Design
 * Embedded custom fonts
-* JavaScript-powered interactive form
+* JavaScript-powered interactive forms
+* Javascript DOM manipulation
 
 This site was created based on a [mockup designed in Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1).
