@@ -22,7 +22,7 @@
 
 @media screen and (min-width: 918px) {
 	.profile__info {
-		max-width: auto;
+		max-width: none;
 		justify-content: left;
 	}
 }
