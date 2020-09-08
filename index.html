@@ -61,7 +61,7 @@
 			
 			<button type="submit" class="button modal__button modal__button_type_save" name="profile-submit">Save</button>
 			
-			<button type="button" class="popup__exit button" aria-label="Close Profile Form"></button>
+			<button type="reset" class="popup__exit button" aria-label="Close Profile Form"></button>
 		</form>
 		
 		
@@ -74,14 +74,16 @@
 			
 			<button type="submit" class="button modal__button modal__button_type_create" name="photo-submit">Create</button>
 			
-			<button type="button" class="popup__exit button" aria-label="Close Photo Form"></button>
+			<button type="reset" class="popup__exit button" aria-label="Close Photo Form"></button>
 		</form>
 		
-		<div class="popup__item photo-viewer">
-			<img class="photo-viewer__image" src="https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg">
-			<p class="photo-viewer__caption">Hello, here is a caption</p>
+		<figure class="popup__item photo-viewer">
+			<img class="photo-viewer__image" src="https://code.s3.yandex.net/web-code/yosemite.jpg" alt="caption">
+				<!-- If I'm changing the src and alt in my js before making this visible, what do I put as a default?
+					Anything entered for those attributes would be meaningless and then overwritten. -->
+			<figcaption class="photo-viewer__caption">Hello, here is a caption</figcaption>
 			<button type="button" class="popup__exit photo-viewer__exit button" aria-label="Close Photo Form"></button>
-		</div>
+		</figure>
 		
 	</div>
 	
@@ -92,7 +94,7 @@
 				<h2 class="photo__caption"></h2>
 				<button type="button" class="photo__like button" aria-label="Like"></button>
 			</div>
-			<button type="button" class="photo__delete button" aria-label="Delete"></button>
+			<button type="reset" class="photo__delete button" aria-label="Delete"></button>
 		</li>
 	</template>
 	

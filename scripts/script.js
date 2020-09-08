@@ -34,12 +34,13 @@ const initialCards = [
 ];
 
 
-/* function: adds a photo card to .photo-grid__list
- * parameters:
- * 	cardObj (object) - contains data for image src and caption
- * 	prepend (boolean) - indicates whether to prepend card to beginning of list (default) or add at the end
+/**
+ * Creates a cloned photo card from template, using data from the cardObj parameter
+ * 
+ * @param {object} cardObj - contains data for image src and caption
+ * @return {HTMLElement} photo card
 */
-function addPhotoCard(cardObj, prepend= true) {
+function createPhotoCard(cardObj, prepend= true) {
 	
 	// clone template for photo card 
 	const newPhoto= photoTemplate.cloneNode(true);
@@ -67,17 +68,30 @@ function addPhotoCard(cardObj, prepend= true) {
 		e.target.parentNode.remove();
 	});
 	
-	// add the photo to the DOM
-	if (prepend) photoContainer.prepend(newPhoto);
-	else photoContainer.append(newPhoto);
+	return newPhoto;
 }
 
 
 
-/* function: opens a popup, making .popup and the active .popup__item visible
- * parameters:
- * 	item (DOM element) - indicates to the specific .popup__item to be made active
- * 	dark (boolean) - indicates whether to add .popup_dark class to make a 90% black overlay, vs. the default 50% black overlay
+/*
+ * Adds a photo card to .photo-grid__list
+ * 
+ * @param {HTMLelement} cardHTML - photo card node ready to insert
+ * @param {boolean} [prepend= true] - indicates whether to prepend card to beginning of list or add at the end
+*/
+function addPhotoCard(cardHTML, prepend= true) {
+	// add the photo to the DOM
+	if (prepend) photoContainer.prepend(cardHTML);
+	else photoContainer.append(cardHTML);
+}
+
+
+
+/*
+ * Opens a popup, making .popup and the active .popup__item visible
+ *
+ * @param {HTMLelement} item - indicates to the specific .popup__item to be made active
+ * @param {boolean} [dark= false] - indicates whether to use a 90% black overlay or the default 50% black overlay
 */
 function openPopup(item, dark= false) {
 	
@@ -96,8 +110,8 @@ function openPopup(item, dark= false) {
 
 
 
-/* function:
- * opens the profile edit form, calling openPopup()
+/* 
+ * Opens the profile edit form, calling openPopup()
 */
 function openProfileForm() {
 
@@ -111,8 +125,8 @@ function openProfileForm() {
 
 
 
-/* function:
- * opens the add photo form, calling openPopup()
+/* 
+ * Opens the add photo form, calling openPopup()
 */
 function openPhotoForm() {
 	// fade in the profile form modal
@@ -121,10 +135,11 @@ function openPhotoForm() {
 
 
 
-/* function: opens the photo viewer, calling openPopup()
- * parameters:
- * 	imageSrc (string) - the image src link
- * 	caption (string) - the caption
+/*
+ * Opens the photo viewer, calling openPopup()
+ *
+ * @param {string} imageSrc - the image src link
+ * @param {string} caption - the caption
 */
 function openPhotoViewer(imageSrc, caption) {
 	
@@ -138,8 +153,8 @@ function openPhotoViewer(imageSrc, caption) {
 
 
 
-/* function:
- * closes any popup
+/* 
+ * Closes any popup
 */
 function exitPopup() {
 	popup.classList.add('popup_hidden');
@@ -148,9 +163,7 @@ function exitPopup() {
 
 	
 
-/*
- * add click events to connect buttons to functions that open and close popups
-*/
+//add click events to connect buttons to functions that open and close popups
 editInfoButton.addEventListener("click", openProfileForm);
 addImageButton.addEventListener("click", openPhotoForm);
 
@@ -160,9 +173,7 @@ exitButtons.forEach((button) => {
 
 
 
-/*
- * add submit events to profile and photo form
-*/
+//add submit event to profile form
 profileForm.addEventListener('submit', (e) => {
 	e.preventDefault(); 
 	
@@ -174,6 +185,7 @@ profileForm.addEventListener('submit', (e) => {
 });
 
 
+//add submit event to photo form
 photoForm.addEventListener('submit', (e) => {
 	e.preventDefault(); 
 	
@@ -181,7 +193,8 @@ photoForm.addEventListener('submit', (e) => {
 	const cardObj= [];
 	cardObj.name= photoFormPlace.value;
 	cardObj.link= photoFormImage.value;
-	addPhotoCard(cardObj);
+	const cardHTML= createPhotoCard(cardObj);
+	addPhotoCard(cardHTML);
 	
 	exitPopup();
 });
@@ -190,5 +203,6 @@ photoForm.addEventListener('submit', (e) => {
 
 // populate .photo-grid__list with initial array of photos and captions
 initialCards.forEach((item) => {
-	addPhotoCard(item, false);
+	const cardHTML= createPhotoCard(item);
+	addPhotoCard(cardHTML, false);
 });
