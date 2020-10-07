@@ -100,7 +100,7 @@ function openPopup(item, dark= false) {
 	else if(!popup.classList.contains('popup_dark')) popup.classList.add('popup_dark');
 
 	// update which popup item is active (necessary to do here so as not to interfere with transitions)
-	let active= popup.querySelector('.popup__item_active');
+	const active= popup.querySelector('.popup__item_active');
 	if(active) active.classList.remove('popup__item_active');
 	item.classList.add('popup__item_active');
 	
@@ -124,7 +124,7 @@ function openProfileForm() {
   profileFields.forEach((field) => {
     if(field.validity) {
       field.classList.remove('modal__input_type_error');
-      let errorInput= profileForm.querySelector(`#${field.id}-error`);
+      const errorInput= profileForm.querySelector(`#${field.id}-error`);
       errorInput.classList.remove('modal__error_active');
       errorInput.textContent= '';
     }
