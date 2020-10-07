@@ -297,3 +297,13 @@ initialCards.forEach((item) => {
 	addPhotoCard(item, false);
 });
   
+
+
+
+popup.addEventListener("click", function (e) {
+  if(e.target.classList.contains('popup')) exitPopup();
+});
+
+document.addEventListener("keyup", function (e) {
+  if(e.key === 'Escape') exitPopup();
+});
