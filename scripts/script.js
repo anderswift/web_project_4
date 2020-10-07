@@ -146,6 +146,37 @@ function exitPopup() {
 }
 
 
+
+/* function:
+ * shows a validation error
+ * parameters:
+ * 	form (DOM element) - the form with the error
+ * 	input (DOM element) - the input field with the error
+ *  errorMsg (string) - the error message to be displayed
+*/
+function showInputError(form, input, errorMsg) {
+  console.log('hello');
+  const errorInput = form.querySelector(`#${input.id}-error`);
+  input.classList.add("modal__input_error");
+  errorInput.textContent = errorMsg;
+  errorInput.classList.add("modal__error_active");
+}
+
+
+
+/* function:
+ * hides a validation error
+ * parameters:
+ * 	form (DOM element) - the form with the error
+ * 	input (DOM element) - the input field with the error
+*/
+function hideInputError(form, input) {
+  const errorInput = form.querySelector(`#${input.id}-error`);
+  input.classList.remove("modal__input_error");
+  errorInput.classList.remove("modal__error_active");
+  errorInput.textContent = '';
+}
+
 	
 
 /*
@@ -192,3 +223,4 @@ photoForm.addEventListener('submit', (e) => {
 initialCards.forEach((item) => {
 	addPhotoCard(item, false);
 });
+  
