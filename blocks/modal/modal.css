@@ -1,5 +1,6 @@
 @import url(./__heading/modal__heading.css);
 @import url(./__input/modal__input.css);
+@import url(./__input/_error/modal__input_error.css);
 @import url(./__button/modal__button.css);
 
 .modal {
