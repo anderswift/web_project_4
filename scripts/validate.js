@@ -3,12 +3,14 @@
  * parameters:
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
+ *  inputErrorClass (string) - the class to add error style for an input field
+ *  errorClass (string) - the class for an active error message
  *  errorMsg (string) - the error message to be displayed
 */
 function showError(form, input, inputErrorClass, errorClass, errorMsg) {
   const errorInput= form.querySelector(`#${input.id}-error`);
   input.classList.add(inputErrorClass);
-  errorInput.textContent = errorMsg;
+  errorInput.textContent= errorMsg;
   errorInput.classList.add(errorClass);
 }
 
@@ -19,6 +21,8 @@ function showError(form, input, inputErrorClass, errorClass, errorMsg) {
  * parameters:
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
+ *  inputErrorClass (string) - the class to add error style for an input field
+ *  errorClass (string) - the class for an active error message
 */
 function hideError(form, input, inputErrorClass, errorClass) {
   const errorInput= form.querySelector(`#${input.id}-error`);
@@ -34,6 +38,8 @@ function hideError(form, input, inputErrorClass, errorClass) {
  * parameters:
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
+ *  inputErrorClass (string) - the class to add error style for an input field
+ *  errorClass (string) - the class for an active error message
 */
 function checkInputValidity(form, input, inputErrorClass, errorClass) {
   if (input.validity.valid) hideError(form, input, inputErrorClass, errorClass);
@@ -46,6 +52,9 @@ function checkInputValidity(form, input, inputErrorClass, errorClass) {
  * checks if a forms has any invalid inputs, then disables/enables submit button as a result
  * parameters:
  * 	form (DOM element) - the form to check
+ *  inputSelector (string) - the selector class for an input field
+ *  submitButtonSelector (string) - the selector class for a submit button
+ *  inactiveButtonClass (string) - the class to make a button disabled
 */
 function toggleButtonState(form, inputSelector, submitButtonSelector, inactiveButtonClass) {
   const inputs= Array.from(form.querySelectorAll(inputSelector));
@@ -65,6 +74,7 @@ function toggleButtonState(form, inputSelector, submitButtonSelector, inactiveBu
 /* function:
  * sets up event listeners on user input to forms, which run validation functions checkInputValidity() and toggleButtonState()
  * parameters:
+ *  setup (object) - contains all relevant classes for form elements
  * 	form (DOM element) - the form to set up validation on
 */
 function setupValidationListeners(setup, form) {
