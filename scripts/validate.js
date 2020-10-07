@@ -5,11 +5,11 @@
  * 	input (DOM element) - the input field with the error
  *  errorMsg (string) - the error message to be displayed
 */
-function showError(form, input, errorMsg) {
+function showError(form, input, inputErrorClass, errorClass, errorMsg) {
   const errorInput= form.querySelector(`#${input.id}-error`);
-  input.classList.add("modal__input_type_error");
+  input.classList.add(inputErrorClass);
   errorInput.textContent = errorMsg;
-  errorInput.classList.add("modal__error_active");
+  errorInput.classList.add(errorClass);
 }
 
 
@@ -20,10 +20,10 @@ function showError(form, input, errorMsg) {
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
 */
-function hideError(form, input) {
+function hideError(form, input, inputErrorClass, errorClass) {
   const errorInput= form.querySelector(`#${input.id}-error`);
-  input.classList.remove("modal__input_type_error");
-  errorInput.classList.remove("modal__error_active");
+  input.classList.remove(inputErrorClass);
+  errorInput.classList.remove(errorClass);
   errorInput.textContent= '';
 }
 
@@ -35,9 +35,9 @@ function hideError(form, input) {
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
 */
-function checkInputValidity(form, input) {
-  if (input.validity.valid) hideError(form, input);
-  else showError(form, input, input.validationMessage); 
+function checkInputValidity(form, input, inputErrorClass, errorClass) {
+  if (input.validity.valid) hideError(form, input, inputErrorClass, errorClass);
+  else showError(form, input, inputErrorClass, errorClass, input.validationMessage); 
 }
 
 
@@ -47,17 +47,17 @@ function checkInputValidity(form, input) {
  * parameters:
  * 	form (DOM element) - the form to check
 */
-function toggleButtonState(form) {
-  const inputs= Array.from(form.querySelectorAll(".modal__input"));
-  const button= form.querySelector('.modal__button');
+function toggleButtonState(form, inputSelector, submitButtonSelector, inactiveButtonClass) {
+  const inputs= Array.from(form.querySelectorAll(inputSelector));
+  const button= form.querySelector(submitButtonSelector);
   
   const somethingIsInvalid= inputs.some((input) => {
     return !input.validity.valid;
   });
-  console.log(somethingIsInvalid);
 
-  if (somethingIsInvalid) button.classList.add("modal__button_disabled");
-  else button.classList.remove("modal__button_disabled");
+
+  if (somethingIsInvalid) button.classList.add(inactiveButtonClass);
+  else button.classList.remove(inactiveButtonClass);
 }
 
 
@@ -67,14 +67,14 @@ function toggleButtonState(form) {
  * parameters:
  * 	form (DOM element) - the form to set up validation on
 */
-function setupValidationListeners(form) {
+function setupValidationListeners(setup, form) {
 
-  const inputs= Array.from(form.querySelectorAll(".modal__input"));
+  const inputs= Array.from(form.querySelectorAll(setup.inputSelector));
 
   inputs.forEach((input) => {
-    input.addEventListener("input", function () {
-      checkInputValidity(form, input); 
-      toggleButtonState(form);
+    input.addEventListener('input', function () {
+      checkInputValidity(form, input, setup.inputErrorClass, setup.errorClass); //passing form, input objects so as avoid querying multiple times
+      toggleButtonState(form, setup.inputSelector, setup.submitButtonSelector, setup.inactiveButtonClass);
     });
   });
 }
@@ -87,21 +87,21 @@ function setupValidationListeners(form) {
  * 	setup (object) - contains all relevant classes for form elements
 */
 function enableValidation(setup) {
-  const forms = Array.from(document.querySelectorAll(".modal"));
+  const forms = Array.from(document.querySelectorAll(setup.formSelector));
   forms.forEach((form) => {
-    form.addEventListener("submit", function (e) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
     });
 
-    setupValidationListeners(form);
+    setupValidationListeners(setup, form); //passing form object so as avoid querying multiple times
   });
 }
 
 enableValidation({
-  formSelector: ".modal",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_active"
+  formSelector: '.modal',
+  inputSelector: '.modal__input',
+  submitButtonSelector: '.modal__button',
+  inactiveButtonClass: 'modal__button_disabled',
+  inputErrorClass: 'modal__input_type_error',
+  errorClass: 'modal__error_active'
 }); 

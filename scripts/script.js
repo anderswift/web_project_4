@@ -1,36 +1,36 @@
 // load all DOM elements objects that will be worked with repeatedly
 const profile= document.querySelector('.profile');
-const editInfoButton= profile.querySelector(".profile__edit-info");
-const profileName= profile.querySelector(".profile__name");
-const profileAbout= profile.querySelector(".profile__about");
-const addImageButton= profile.querySelector(".profile__add-image");
+const editInfoButton= profile.querySelector('.profile__edit-info');
+const profileName= profile.querySelector('.profile__name');
+const profileAbout= profile.querySelector('.profile__about');
+const addImageButton= profile.querySelector('.profile__add-image');
 
 const photoContainer= document.querySelector('.photo-grid__list');
 const photoTemplate= document.querySelector('#photo-template').content;
 
-const popup= document.querySelector(".popup");
-const exitButtons= popup.querySelectorAll(".popup__exit");
-const photoViewer= popup.querySelector(".photo-viewer");
-const photoViewerImage= photoViewer.querySelector(".photo-viewer__image");
-const photoViewerCaption= photoViewer.querySelector(".photo-viewer__caption");
+const popup= document.querySelector('.popup');
+const exitButtons= popup.querySelectorAll('.popup__exit');
+const photoViewer= popup.querySelector('.photo-viewer');
+const photoViewerImage= photoViewer.querySelector('.photo-viewer__image');
+const photoViewerCaption= photoViewer.querySelector('.photo-viewer__caption');
 
-const profileForm= popup.querySelector(".modal_form_profile");
-const profileFormName= profileForm.querySelector(".modal__input_type_name");
-const profileFormAbout= profileForm.querySelector(".modal__input_type_about");
+const profileForm= popup.querySelector('.modal_form_profile');
+const profileFormName= profileForm.querySelector('.modal__input_type_name');
+const profileFormAbout= profileForm.querySelector('.modal__input_type_about');
 
-const photoForm= popup.querySelector(".modal_form_photo");
-const photoFormPlace= photoForm.querySelector(".modal__input_type_place");
-const photoFormImage= photoForm.querySelector(".modal__input_type_imgsrc");
+const photoForm= popup.querySelector('.modal_form_photo');
+const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
+const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
 
 
 // initial set of photo cards, to be loaded dynamically
 const initialCards = [
-  { name: "Yosemite Valley", link: "https://code.s3.yandex.net/web-code/yosemite.jpg" },
-  { name: "Lake Louise", link: "https://code.s3.yandex.net/web-code/lake-louise.jpg" },
-  { name: "Bald Mountains", link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg" },
-  { name: "Latemar", link: "https://code.s3.yandex.net/web-code/latemar.jpg" },
-  { name: "Vanoise National Park", link: "https://code.s3.yandex.net/web-code/vanoise.jpg" },
-  { name: "Lago di Braies", link: "https://code.s3.yandex.net/web-code/lago.jpg" }
+  { name: 'Yosemite Valley', link: 'https://code.s3.yandex.net/web-code/yosemite.jpg' },
+  { name: 'Lake Louise', link: 'https://code.s3.yandex.net/web-code/lake-louise.jpg' },
+  { name: 'Bald Mountains', link: 'https://code.s3.yandex.net/web-code/bald-mountains.jpg' },
+  { name: 'Latemar', link: 'https://code.s3.yandex.net/web-code/latemar.jpg' },
+  { name: 'Vanoise National Park', link: 'https://code.s3.yandex.net/web-code/vanoise.jpg' },
+  { name: 'Lago di Braies', link: 'https://code.s3.yandex.net/web-code/lago.jpg' }
 ];
 
 
@@ -43,27 +43,27 @@ function addPhotoCard(cardObj, prepend= true) {
 	
 	// clone template for photo card 
 	const newPhoto= photoTemplate.cloneNode(true);
-	const newImage= newPhoto.querySelector(".photo__image");
+	const newImage= newPhoto.querySelector('.photo__image');
 	
 	// add image src, alt, and event listener for popup viewer
 	newImage.src= cardObj.link;
 	newImage.alt= cardObj.name;
-	newImage.addEventListener("click", (e) => {
+	newImage.addEventListener('click', (e) => {
 		e.preventDefault();
 		openPhotoViewer(cardObj.link, cardObj.name);
 	});
 	
 	// add caption content
-	newPhoto.querySelector(".photo__caption").textContent= cardObj.name;
+	newPhoto.querySelector('.photo__caption').textContent= cardObj.name;
 	
 	// add like event to button
-	newPhoto.querySelector(".photo__like").addEventListener("click", (e) => {
-		e.target.classList.toggle("photo__like_on");
+	newPhoto.querySelector('.photo__like').addEventListener('click', (e) => {
+		e.target.classList.toggle('photo__like_on');
 		e.target.blur();
 	});
 	
 	// add like event to button
-	newPhoto.querySelector(".photo__delete").addEventListener("click", (e) => {
+	newPhoto.querySelector('.photo__delete').addEventListener('click', (e) => {
 		e.target.parentNode.remove();
 	});
 	
@@ -86,8 +86,8 @@ function openPopup(item, dark= false) {
 	else if(!popup.classList.contains('popup_dark')) popup.classList.add('popup_dark');
 
 	// update which popup item is active (necessary to do here so as not to interfere with transitions)
-	let active= popup.querySelector(".popup__item_active");
-	if(active) active.classList.remove("popup__item_active");
+	let active= popup.querySelector('.popup__item_active');
+	if(active) active.classList.remove('popup__item_active');
 	item.classList.add('popup__item_active');
 	
 	// fade in popup
@@ -105,7 +105,21 @@ function openProfileForm() {
 	profileFormName.value= profileName.textContent;
 	profileFormAbout.value= profileAbout.textContent;
   
-  toggleButtonState(profileForm);
+  // can't run validation functions here because it's in a separate file, so have to recreate
+  const profileFields= [profileFormName, profileFormAbout];
+  profileFields.forEach((field) => {
+    if(field.validity) {
+      field.classList.remove('modal__input_type_error');
+      let errorInput= profileForm.querySelector(`#${field.id}-error`);
+      errorInput.classList.remove('modal__error_active');
+      errorInput.textContent= '';
+    }
+  });
+
+  
+  if(profileFormName.validity && profileFormAbout.validity)
+    profileForm.querySelector('.modal__button').classList.remove('modal__button_disabled');
+  
 
 	// fade in the profile form modal
 	openPopup(profileForm);
@@ -153,11 +167,11 @@ function exitPopup() {
 /*
  * add click events to connect buttons to functions that open and close popups
 */
-editInfoButton.addEventListener("click", openProfileForm);
-addImageButton.addEventListener("click", openPhotoForm);
+editInfoButton.addEventListener('click', openProfileForm);
+addImageButton.addEventListener('click', openPhotoForm);
 
 exitButtons.forEach((button) => {
-	button.addEventListener("click", exitPopup);
+	button.addEventListener('click', exitPopup);
 });
 
 
@@ -198,11 +212,11 @@ initialCards.forEach((item) => {
 
 
 // close popup if user clicks on overlay
-popup.addEventListener("click", function (e) {
+popup.addEventListener('click', function (e) {
   if(e.target.classList.contains('popup')) exitPopup();
 });
 
 // close popup if user presses escape key
-document.addEventListener("keyup", function (e) {
+document.addEventListener('keyup', function (e) {
   if(e.key === 'Escape') exitPopup();
 });
