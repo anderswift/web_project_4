@@ -56,8 +56,8 @@
 			
 			<h3 class="modal__heading">Edit profile</h3>
 			
-			<input type="text" name="profile-name" class="modal__input modal__input_type_name" aria-label="Name" placeholder="Name" required>
-			<input type="text" name= "profile-about" class="modal__input modal__input_type_about" aria-label="About me" placeholder="About me" required>
+			<input type="text" name="profile-name" class="modal__input modal__input_type_name" aria-label="Name" placeholder="Name" minlength="2" maxlength="40" required>
+			<input type="text" name= "profile-about" class="modal__input modal__input_type_about" aria-label="About me" placeholder="About me" minlength="2" maxlength="200" required>
 			
 			<button type="submit" class="button modal__button modal__button_type_save" name="profile-submit">Save</button>
 			
@@ -69,8 +69,8 @@
 			
 			<h3 class="modal__heading">New place</h3>
 			
-			<input type="text" name="photo-place" class="modal__input modal__input_type_place" aria-label="Title" placeholder="Title" required>
-			<input type="text" name= "photo-imgsrc" class="modal__input modal__input_type_imgsrc" aria-label="Image link" placeholder="Image link" required>
+			<input type="text" name="photo-place" class="modal__input modal__input_type_place" aria-label="Title" placeholder="Title" minlength="2" maxlength="30" required>
+			<input type="url" name= "photo-imgsrc" class="modal__input modal__input_type_imgsrc" aria-label="Image link" placeholder="Image link" required>
 			
 			<button type="submit" class="button modal__button modal__button_type_create" name="photo-submit">Create</button>
 			
