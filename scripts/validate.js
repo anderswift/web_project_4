@@ -7,7 +7,7 @@
 */
 function showError(form, input, errorMsg) {
   const errorInput= form.querySelector(`#${input.id}-error`);
-  input.classList.add("modal__input_error");
+  input.classList.add("modal__input_type_error");
   errorInput.textContent = errorMsg;
   errorInput.classList.add("modal__error_active");
 }
@@ -22,7 +22,7 @@ function showError(form, input, errorMsg) {
 */
 function hideError(form, input) {
   const errorInput= form.querySelector(`#${input.id}-error`);
-  input.classList.remove("modal__input_error");
+  input.classList.remove("modal__input_type_error");
   errorInput.classList.remove("modal__error_active");
   errorInput.textContent= '';
 }
@@ -83,8 +83,10 @@ function setupValidationListeners(form) {
 
 /* function:
  * finds any forms in DOM, disables submission for default validation and runs setupValidationListeners()
+ * parameters:
+ * 	setup (object) - contains all relevant classes for form elements
 */
-function enableValidation() {
+function enableValidation(setup) {
   const forms = Array.from(document.querySelectorAll(".modal"));
   forms.forEach((form) => {
     form.addEventListener("submit", function (e) {
@@ -95,4 +97,11 @@ function enableValidation() {
   });
 }
 
-enableValidation();
+enableValidation({
+  formSelector: ".modal",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_active"
+}); 
