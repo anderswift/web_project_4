@@ -86,6 +86,24 @@ function addPhotoCard(cardHTML, prepend= true) {
 
 
 
+/* 
+ * Callback function that closes popup when escape key pressed
+*/
+const closePopupOnEsc= (e) => {
+  if(e.target.classList.contains('popup')) exitPopup();
+}
+
+
+
+/* 
+ * Callback function that closes popup when overlay clicked
+*/
+const closePopupOnClickAway= (e) => {
+  if(e.key === 'Escape') exitPopup();
+}
+
+
+
 /*
  * Opens a popup, making .popup and the active .popup__item visible
  *
@@ -101,7 +119,13 @@ function openPopup(item, dark= false) {
 	// update which popup item is active (necessary to do here so as not to interfere with transitions)
 	const active= popup.querySelector('.popup__item_active');
 	if(active) active.classList.remove('popup__item_active');
-	item.classList.add('popup__item_active');
+  item.classList.add('popup__item_active');
+  
+  // add listener with callback to close popup if user clicks on overlay
+  popup.addEventListener('click', closePopupOnEsc);
+
+  // add listener with callback to close popup if user presses escape key
+  document.addEventListener('keyup', closePopupOnClickAway);
 	
 	// fade in popup
 	popup.classList.remove('popup_hidden');
@@ -128,11 +152,9 @@ function openProfileForm() {
       errorInput.textContent= '';
     }
   });
-
   
   if(profileFormName.validity && profileFormAbout.validity)
     profileForm.querySelector('.modal__button').classList.remove('modal__button_disabled');
-  
 
 	// fade in the profile form modal
 	openPopup(profileForm);
@@ -173,7 +195,13 @@ function openPhotoViewer(imageSrc, caption) {
  * Closes any popup
 */
 function exitPopup() {
-	popup.classList.add('popup_hidden');
+  popup.classList.add('popup_hidden');
+  
+  // remove listener to close popup if user clicks on overlay
+  popup.removeEventListener('click', closePopupOnEsc);
+
+  // remove listener to close popup if user presses escape key
+  document.removeEventListener('keyup', closePopupOnClickAway);
 }
 
 
@@ -221,16 +249,4 @@ photoForm.addEventListener('submit', (e) => {
 initialCards.forEach((item) => {
 	const cardHTML= createPhotoCard(item);
 	addPhotoCard(cardHTML, false);
-});
-
-
-
-// close popup if user clicks on overlay
-popup.addEventListener('click', (e) => {
-  if(e.target.classList.contains('popup')) exitPopup();
-});
-
-// close popup if user presses escape key
-document.addEventListener('keyup', (e) => {
-  if(e.key === 'Escape') exitPopup();
 });

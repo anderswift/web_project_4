@@ -1,5 +1,6 @@
-/* function:
- * shows a validation error
+/* 
+ * Shows a validation error
+ *
  * parameters:
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
@@ -16,8 +17,9 @@ function showError(form, input, inputErrorClass, errorClass, errorMsg) {
 
 
 
-/* function:
- * hides a validation error
+/* 
+ * Hides a validation error
+ *
  * parameters:
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
@@ -33,8 +35,9 @@ function hideError(form, input, inputErrorClass, errorClass) {
 
 
 
-/* function:
- * checks if an input's value is valid, and runs either hideError() or showError() as a result
+/* 
+ * Checks if an input's value is valid, and runs either hideError() or showError() as a result
+ *
  * parameters:
  * 	form (DOM element) - the form with the error
  * 	input (DOM element) - the input field with the error
@@ -48,8 +51,9 @@ function checkInputValidity(form, input, inputErrorClass, errorClass) {
 
 
 
-/* function:
+/* 
  * checks if a forms has any invalid inputs, then disables/enables submit button as a result
+ *
  * parameters:
  * 	form (DOM element) - the form to check
  *  inputSelector (string) - the selector class for an input field
@@ -71,8 +75,9 @@ function toggleButtonState(form, inputSelector, submitButtonSelector, inactiveBu
 
 
 
-/* function:
- * sets up event listeners on user input to forms, which run validation functions checkInputValidity() and toggleButtonState()
+/* 
+ * Sets up event listeners on user input to forms, which run validation functions checkInputValidity() and toggleButtonState()
+ * 
  * parameters:
  *  setup (object) - contains all relevant classes for form elements
  * 	form (DOM element) - the form to set up validation on
@@ -91,8 +96,9 @@ function setupValidationListeners(setup, form) {
 
 
 
-/* function:
- * finds any forms in DOM, disables submission for default validation and runs setupValidationListeners()
+/* 
+ * Finds any forms in DOM, disables submission for default validation and runs setupValidationListeners()
+ * 
  * parameters:
  * 	setup (object) - contains all relevant classes for form elements
 */
