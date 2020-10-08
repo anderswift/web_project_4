@@ -50,7 +50,6 @@ function createPhotoCard(cardObj, prepend= true) {
 	newImage.src= cardObj.link;
 	newImage.alt= cardObj.name;
 	newImage.addEventListener('click', (e) => {
-		e.preventDefault();
 		openPhotoViewer(cardObj.link, cardObj.name);
 	});
 	
@@ -227,11 +226,11 @@ initialCards.forEach((item) => {
 
 
 // close popup if user clicks on overlay
-popup.addEventListener('click', function (e) {
+popup.addEventListener('click', (e) => {
   if(e.target.classList.contains('popup')) exitPopup();
 });
 
 // close popup if user presses escape key
-document.addEventListener('keyup', function (e) {
+document.addEventListener('keyup', (e) => {
   if(e.key === 'Escape') exitPopup();
 });

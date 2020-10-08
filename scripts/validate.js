@@ -82,7 +82,7 @@ function setupValidationListeners(setup, form) {
   const inputs= Array.from(form.querySelectorAll(setup.inputSelector));
 
   inputs.forEach((input) => {
-    input.addEventListener('input', function () {
+    input.addEventListener('input', () => {
       checkInputValidity(form, input, setup.inputErrorClass, setup.errorClass); //passing form, input objects so as avoid querying multiple times
       toggleButtonState(form, setup.inputSelector, setup.submitButtonSelector, setup.inactiveButtonClass);
     });
@@ -99,7 +99,7 @@ function setupValidationListeners(setup, form) {
 function enableValidation(setup) {
   const forms = Array.from(document.querySelectorAll(setup.formSelector));
   forms.forEach((form) => {
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
     });
 
