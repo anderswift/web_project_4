@@ -1,3 +1,5 @@
+import { Card } from "./card.js";
+
 // load all DOM elements objects that will be worked with repeatedly
 const profile= document.querySelector('.profile');
 const editInfoButton= profile.querySelector('.profile__edit-info');
@@ -5,8 +7,7 @@ const profileName= profile.querySelector('.profile__name');
 const profileAbout= profile.querySelector('.profile__about');
 const addImageButton= profile.querySelector('.profile__add-image');
 
-const photoContainer= document.querySelector('.photo-grid__list');
-const photoTemplate= document.querySelector('#photo-template').content;
+const cardContainer= document.querySelector('.photo-grid__list')
 
 const popup= document.querySelector('.popup');
 const exitButtons= popup.querySelectorAll('.popup__exit');
@@ -23,66 +24,12 @@ const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
 const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
 
 
-// initial set of photo cards, to be loaded dynamically
-const initialCards = [
-  { name: 'Yosemite Valley', link: 'https://code.s3.yandex.net/web-code/yosemite.jpg' },
-  { name: 'Lake Louise', link: 'https://code.s3.yandex.net/web-code/lake-louise.jpg' },
-  { name: 'Bald Mountains', link: 'https://code.s3.yandex.net/web-code/bald-mountains.jpg' },
-  { name: 'Latemar', link: 'https://code.s3.yandex.net/web-code/latemar.jpg' },
-  { name: 'Vanoise National Park', link: 'https://code.s3.yandex.net/web-code/vanoise.jpg' },
-  { name: 'Lago di Braies', link: 'https://code.s3.yandex.net/web-code/lago.jpg' }
-];
-
-
-/**
- * Creates a cloned photo card from template, using data from the cardObj parameter
- * 
- * @param {object} cardObj - contains data for image src and caption
- * @return {HTMLElement} photo card
-*/
-function createPhotoCard(cardObj, prepend= true) {
-	
-	// clone template for photo card 
-	const newPhoto= photoTemplate.cloneNode(true);
-	const newImage= newPhoto.querySelector('.photo__image');
-	
-	// add image src, alt, and event listener for popup viewer
-	newImage.src= cardObj.link;
-	newImage.alt= cardObj.name;
-	newImage.addEventListener('click', (e) => {
-		openPhotoViewer(cardObj.link, cardObj.name);
-	});
-	
-	// add caption content
-	newPhoto.querySelector('.photo__caption').textContent= cardObj.name;
-	
-	// add like event to button
-	newPhoto.querySelector('.photo__like').addEventListener('click', (e) => {
-		e.target.classList.toggle('photo__like_on');
-		e.target.blur();
-	});
-	
-	// add like event to button
-	newPhoto.querySelector('.photo__delete').addEventListener('click', (e) => {
-		e.target.parentNode.remove();
-	});
-	
-	return newPhoto;
-}
 
 
 
-/*
- * Adds a photo card to .photo-grid__list
- * 
- * @param {HTMLelement} cardHTML - photo card node ready to insert
- * @param {boolean} [prepend= true] - indicates whether to prepend card to beginning of list or add at the end
-*/
-function addPhotoCard(cardHTML, prepend= true) {
-	// add the photo to the DOM
-	if (prepend) photoContainer.prepend(cardHTML);
-	else photoContainer.append(cardHTML);
-}
+
+
+
 
 
 
@@ -179,8 +126,8 @@ function openPhotoForm() {
  * @param {string} imageSrc - the image src link
  * @param {string} caption - the caption
 */
-function openPhotoViewer(imageSrc, caption) {
-	
+const openPhotoViewer= (imageSrc, caption) => {
+	console.log('running');
 	//load photo into viewer
 	photoViewerImage.src= imageSrc;
 	photoViewerImage.alt= caption;
@@ -233,20 +180,48 @@ profileForm.addEventListener('submit', (e) => {
 photoForm.addEventListener('submit', (e) => {
 	e.preventDefault(); 
 	
-	// run addPhotoCard() to add a photo card to the DOM with the data entered into form
-	const cardObj= [];
-	cardObj.name= photoFormPlace.value;
-	cardObj.link= photoFormImage.value;
-	const cardHTML= createPhotoCard(cardObj);
-	addPhotoCard(cardHTML);
+  const card= new Card({ 
+    name: photoFormPlace.value, 
+    imageUrl: photoFormImage.value, 
+    photoCallback: openPhotoViewer 
+  });
+	renderCard(cardContainer, card.generateCard());
 	
 	exitPopup();
 });
 
 
 
+/*
+ * Adds a photo card to a container element
+ * 
+ * @param {HTMLelement} container - container element
+ * @param {HTMLelement} cardHTML - photo card node ready to insert
+ * @param {boolean} [prepend= true] - indicates whether to prepend card to beginning of list or add at the end
+*/
+function renderCard(container, cardElement, prepend= true) {
+	// add the photo to the DOM
+	if (prepend) container.prepend(cardElement);
+	else container.append(cardElement);
+}
+
+
+
+
+// initial set of photo cards, to be loaded dynamically
+const initialCards = [
+  { name: 'Yosemite Valley', imageUrl: 'https://code.s3.yandex.net/web-code/yosemite.jpg' },
+  { name: 'Lake Louise', imageUrl: 'https://code.s3.yandex.net/web-code/lake-louise.jpg' },
+  { name: 'Bald Mountains', imageUrl: 'https://code.s3.yandex.net/web-code/bald-mountains.jpg' },
+  { name: 'Latemar', imageUrl: 'https://code.s3.yandex.net/web-code/latemar.jpg' },
+  { name: 'Vanoise National Park', imageUrl: 'https://code.s3.yandex.net/web-code/vanoise.jpg' },
+  { name: 'Lago di Braies', imageUrl: 'https://code.s3.yandex.net/web-code/lago.jpg' }
+];
+
+
 // populate .photo-grid__list with initial array of photos and captions
-initialCards.forEach((item) => {
-	const cardHTML= createPhotoCard(item);
-	addPhotoCard(cardHTML, false);
+initialCards.forEach((setup) => {
+  setup.photoCallback= openPhotoViewer;
+  const card= new Card(setup);
+	renderCard(cardContainer, card.generateCard(), false);
 });
