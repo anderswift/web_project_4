@@ -50,8 +50,7 @@
 	
 	
 	
-	<div class="popup popup_hidden popup_dark">
-		
+	<div class="popup">
 		<form name="profile-form" class="popup__item modal modal_form_profile">
 			
 			<h3 class="modal__heading">Edit profile</h3>
@@ -65,9 +64,10 @@
 			<button type="submit" class="button modal__button modal__button_type_save modal__button_disabled" name="profile-submit">Save</button>
 			
 			<button type="reset" class="popup__exit button" aria-label="Close Profile Form"></button>
-		</form>
+    </form>
+  </div>
 		
-		
+  <div class="popup">
 		<form name="profile-form" class="popup__item modal modal_form_photo">
 			
 			<h3 class="modal__heading">New place</h3>
@@ -82,7 +82,10 @@
 			
 			<button type="reset" class="popup__exit button" aria-label="Close Photo Form"></button>
 		</form>
-    
+  </div>
+
+
+  <div class="popup popup_dark">  
     <div class="popup__item photo-viewer">
       <figure class="photo-viewer__figure">
         <img class="photo-viewer__image" src="https://code.s3.yandex.net/web-code/yosemite.jpg" alt="caption">
@@ -90,7 +93,6 @@
       </figure>
       <button type="button" class="popup__exit photo-viewer__exit button" aria-label="Close Photo Form"></button>
     </div>
-		
 	</div>
 	
 	<template id="photo-template">

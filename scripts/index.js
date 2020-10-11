@@ -12,21 +12,22 @@ const addImageButton= profile.querySelector('.profile__add-image');
 
 const cardContainer= document.querySelector('.photo-grid__list')
 
-const popup= document.querySelector('.popup');
-const exitButtons= popup.querySelectorAll('.popup__exit');
-const photoViewer= popup.querySelector('.photo-viewer');
+const exitButtons= document.querySelectorAll('.popup__exit');
+
+const photoViewer= document.querySelector('.photo-viewer');
 const photoViewerImage= photoViewer.querySelector('.photo-viewer__image');
 const photoViewerCaption= photoViewer.querySelector('.photo-viewer__caption');
 
-const profileForm= popup.querySelector('.modal_form_profile');
+const profileForm= document.querySelector('.modal_form_profile');
 const profileFormName= profileForm.querySelector('.modal__input_type_name');
 const profileFormAbout= profileForm.querySelector('.modal__input_type_about');
 
-const photoForm= popup.querySelector('.modal_form_photo');
+const photoForm= document.querySelector('.modal_form_photo');
 const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
 const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
 
 
+// settings for form validation objects
 const formSettings= {
   inputSelector: '.modal__input',
   submitButtonSelector: '.modal__button',
@@ -34,7 +35,7 @@ const formSettings= {
   inputErrorClass: 'modal__input_type_error',
   errorClass: 'modal__error_active'
 };
-
+// create instances of FormValidator for each form
 const photoValidator= new FormValidator(photoForm, formSettings);
 const profileValidator= new FormValidator(profileForm, formSettings);
 
@@ -59,30 +60,20 @@ const closePopupOnClickAway= (e) => {
 
 
 /*
- * Opens a popup, making .popup and the active .popup__item visible
+ * Opens a popup, making .popup visible
  *
  * @param {HTMLelement} item - indicates to the specific .popup__item to be made active
- * @param {boolean} [dark= false] - indicates whether to use a 90% black overlay or the default 50% black overlay
 */
-function openPopup(item, dark= false) {
-	
-	// add class for darker overlay if necessary
-	if (!dark) popup.classList.remove('popup_dark');
-	else if(!popup.classList.contains('popup_dark')) popup.classList.add('popup_dark');
-
-	// update which popup item is active (necessary to do here so as not to interfere with transitions)
-	const active= popup.querySelector('.popup__item_active');
-	if(active) active.classList.remove('popup__item_active');
-  item.classList.add('popup__item_active');
+function openPopup(item) {
   
   // add listener with callback to close popup if user clicks on overlay
-  popup.addEventListener('click', closePopupOnEsc);
+  document.addEventListener('click', closePopupOnEsc);
 
   // add listener with callback to close popup if user presses escape key
   document.addEventListener('keyup', closePopupOnClickAway);
 	
 	// fade in popup
-	popup.classList.remove('popup_hidden');
+	item.parentElement.classList.add('popup_active');
 }
 
 
@@ -133,7 +124,7 @@ const openPhotoViewer= (imageSrc, caption) => {
 	photoViewerImage.alt= caption;
 	photoViewerCaption.textContent= caption;
 	
-	openPopup(photoViewer, true);
+	openPopup(photoViewer);
 }
 
 
@@ -142,53 +133,15 @@ const openPhotoViewer= (imageSrc, caption) => {
  * Closes any popup
 */
 function exitPopup() {
-  popup.classList.add('popup_hidden');
+  const activePopup= document.querySelector('.popup_active');
+  activePopup.classList.remove('popup_active');
   
   // remove listener to close popup if user clicks on overlay
-  popup.removeEventListener('click', closePopupOnEsc);
+  activePopup.removeEventListener('click', closePopupOnEsc);
 
   // remove listener to close popup if user presses escape key
   document.removeEventListener('keyup', closePopupOnClickAway);
 }
-
-
-
-//add click events to connect buttons to functions that open and close popups
-editInfoButton.addEventListener("click", openProfileForm);
-addImageButton.addEventListener("click", openPhotoForm);
-
-
-exitButtons.forEach((button) => {
-	button.addEventListener('click', exitPopup);
-});
-
-
-
-//add submit event to profile form
-profileForm.addEventListener('submit', (e) => {
-	e.preventDefault(); 
-	
-	// update text content in profile with new data entered into form
-	profileName.textContent= profileFormName.value;
-	profileAbout.textContent= profileFormAbout.value;
-	
-	exitPopup();
-});
-
-
-//add submit event to photo form
-photoForm.addEventListener('submit', (e) => {
-	e.preventDefault(); 
-	
-  const card= new Card({ 
-    name: photoFormPlace.value, 
-    imageUrl: photoFormImage.value, 
-    photoCallback: openPhotoViewer 
-  });
-	renderCard(cardContainer, card.generateCard());
-	
-	exitPopup();
-});
 
 
 
@@ -207,6 +160,43 @@ function renderCard(container, cardElement, prepend= true) {
 
 
 
+// add click events to connect buttons to functions that open and close popups
+editInfoButton.addEventListener("click", openProfileForm);
+addImageButton.addEventListener("click", openPhotoForm);
+
+exitButtons.forEach((button) => {
+	button.addEventListener('click', exitPopup);
+});
+
+
+// add submit event to profile form
+profileForm.addEventListener('submit', (e) => {
+	e.preventDefault(); 
+	
+	// update text content in profile with new data entered into form
+	profileName.textContent= profileFormName.value;
+	profileAbout.textContent= profileFormAbout.value;
+	
+	exitPopup();
+});
+
+
+// add submit event to photo form
+photoForm.addEventListener('submit', (e) => {
+	e.preventDefault(); 
+	
+  const card= new Card({ 
+    name: photoFormPlace.value, 
+    imageUrl: photoFormImage.value, 
+    photoCallback: openPhotoViewer 
+  });
+	renderCard(cardContainer, card.generateCard());
+	
+	exitPopup();
+});
+
+
+
 // populate .photo-grid__list with initial array of photos and captions
 initialCardData.forEach((setup) => {
   setup.photoCallback= openPhotoViewer;
@@ -216,6 +206,14 @@ initialCardData.forEach((setup) => {
 
 
 
-
+// start validation
 photoValidator.enableValidation();
 profileValidator.enableValidation();
+
+
+
+/* Without initial state of "display:none" popups briefly flash on screen
+ * while page is loading. This turns off that rule after the page has loaded.
+ * The only other way I found to avoid this was to toggle multiple classes to show/hide a popup.  
+ */
+document.querySelectorAll('.popup').forEach((popup) => { popup.style.display= 'flex'; });

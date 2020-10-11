@@ -1,5 +1,4 @@
 @import url(./__item/popup__item.css);
-@import url(./__item/_active/popup__item_active.css);
 @import url(./__exit/popup__exit.css);
 
 .popup {
@@ -8,9 +7,9 @@
 	top: 0;
 	width: 100%;
 	left: 0;
-	height: 100%;
-	display: flex;
-	visibility: visible;
-	opacity: 1;
-	transition: visibility 0s, opacity 0.35s ease-in;
+  height: 100%;
+  display: none; /* required or hidden items flash on page while loading */
+  visibility: hidden;
+  opacity: 0;
+	transition: opacity 0.2s ease-in, visibility .25s;
 }
