@@ -122,7 +122,6 @@ function openPhotoForm() {
  * @param {string} caption - the caption
 */
 const openPhotoViewer= (imageSrc, caption) => {
-	console.log('running');
 	//load photo into viewer
 	photoViewerImage.src= imageSrc;
 	photoViewerImage.alt= caption;
