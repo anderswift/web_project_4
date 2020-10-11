@@ -1,6 +1,6 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
-
+import { initialCardData } from "./initialCardData.js";
 
 
 // load all DOM elements objects that will be worked with repeatedly
@@ -26,6 +26,17 @@ const photoForm= popup.querySelector('.modal_form_photo');
 const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
 const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
 
+
+const formSettings= {
+  inputSelector: '.modal__input',
+  submitButtonSelector: '.modal__button',
+  inactiveButtonClass: 'modal__button_disabled',
+  inputErrorClass: 'modal__input_type_error',
+  errorClass: 'modal__error_active'
+};
+
+const photoValidator= new FormValidator(photoForm, formSettings);
+const profileValidator= new FormValidator(profileForm, formSettings);
 
 
 
@@ -88,16 +99,10 @@ function openProfileForm() {
   // run validation checks to ensure initial form state is correct
   const profileFields= [profileFormName, profileFormAbout];
   profileFields.forEach((field) => {
-    if(field.validity) {
-      field.classList.remove('modal__input_type_error');
-      const errorInput= profileForm.querySelector(`#${field.id}-error`);
-      errorInput.classList.remove('modal__error_active');
-      errorInput.textContent= '';
-    }
+    profileValidator.checkInputValidity(field);
   });
   
-  if(profileFormName.validity && profileFormAbout.validity)
-    profileForm.querySelector('.modal__button').classList.remove('modal__button_disabled');
+  profileValidator.toggleButtonState();
 
 	// fade in the profile form modal
 	openPopup(profileForm);
@@ -202,20 +207,8 @@ function renderCard(container, cardElement, prepend= true) {
 
 
 
-
-// initial set of photo cards, to be loaded dynamically
-const initialCards = [
-  { name: 'Yosemite Valley', imageUrl: 'https://code.s3.yandex.net/web-code/yosemite.jpg' },
-  { name: 'Lake Louise', imageUrl: 'https://code.s3.yandex.net/web-code/lake-louise.jpg' },
-  { name: 'Bald Mountains', imageUrl: 'https://code.s3.yandex.net/web-code/bald-mountains.jpg' },
-  { name: 'Latemar', imageUrl: 'https://code.s3.yandex.net/web-code/latemar.jpg' },
-  { name: 'Vanoise National Park', imageUrl: 'https://code.s3.yandex.net/web-code/vanoise.jpg' },
-  { name: 'Lago di Braies', imageUrl: 'https://code.s3.yandex.net/web-code/lago.jpg' }
-];
-
-
 // populate .photo-grid__list with initial array of photos and captions
-initialCards.forEach((setup) => {
+initialCardData.forEach((setup) => {
   setup.photoCallback= openPhotoViewer;
   const card= new Card(setup);
 	renderCard(cardContainer, card.generateCard(), false);
@@ -223,17 +216,6 @@ initialCards.forEach((setup) => {
 
 
 
-const forms = Array.from(document.querySelectorAll('.modal'));
-forms.forEach((form) => { 
-  const validator= new FormValidator(
-    form, 
-    {
-      inputSelector: '.modal__input',
-      submitButtonSelector: '.modal__button',
-      inactiveButtonClass: 'modal__button_disabled',
-      inputErrorClass: 'modal__input_type_error',
-      errorClass: 'modal__error_active'
-    }
-  );
-  validator.enableValidation();
-});
+
+photoValidator.enableValidation();
+profileValidator.enableValidation();

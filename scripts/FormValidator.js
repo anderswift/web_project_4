@@ -25,13 +25,13 @@ export class FormValidator {
   }
 
 
-  _checkInputValidity(input) {
+  checkInputValidity(input) {
     if (input.validity.valid) this._hideError(input);
     else this._showError(input, input.validationMessage); 
   }
 
 
-  _toggleButtonState() {
+  toggleButtonState() {
     const inputs= Array.from(this._formElement.querySelectorAll(this._inputSelector));
     const button= this._formElement.querySelector(this._submitButtonSelector);
     
@@ -49,8 +49,8 @@ export class FormValidator {
   
     inputs.forEach((input) => {
       input.addEventListener('input', () => {
-        this._checkInputValidity(input);
-        this._toggleButtonState();
+        this.checkInputValidity(input);
+        this.toggleButtonState();
       });
     });
   }
