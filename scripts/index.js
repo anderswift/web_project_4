@@ -1,4 +1,6 @@
 import { Card } from "./card.js";
+import { FormValidator } from "./FormValidator.js";
+
 
 // load all DOM elements objects that will be worked with repeatedly
 const profile= document.querySelector('.profile');
@@ -22,13 +24,6 @@ const profileFormAbout= profileForm.querySelector('.modal__input_type_about');
 const photoForm= popup.querySelector('.modal_form_photo');
 const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
 const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
-
-
-
-
-
-
-
 
 
 
@@ -89,7 +84,7 @@ function openProfileForm() {
 	profileFormName.value= profileName.textContent;
 	profileFormAbout.value= profileAbout.textContent;
   
-  // can't run validation functions here because it's in a separate file, so have to recreate
+  // run validation checks to ensure initial form state is correct
   const profileFields= [profileFormName, profileFormAbout];
   profileFields.forEach((field) => {
     if(field.validity) {
@@ -224,4 +219,21 @@ initialCards.forEach((setup) => {
   setup.photoCallback= openPhotoViewer;
   const card= new Card(setup);
 	renderCard(cardContainer, card.generateCard(), false);
+});
+
+
+
+const forms = Array.from(document.querySelectorAll('.modal'));
+forms.forEach((form) => { 
+  const validator= new FormValidator(
+    form, 
+    {
+      inputSelector: '.modal__input',
+      submitButtonSelector: '.modal__button',
+      inactiveButtonClass: 'modal__button_disabled',
+      inputErrorClass: 'modal__input_type_error',
+      errorClass: 'modal__error_active'
+    }
+  );
+  validator.enableValidation();
 });
