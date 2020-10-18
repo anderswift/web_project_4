@@ -4,6 +4,8 @@ import { Section } from "../components/Section.js";
 import { Card } from "../components/Card.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Popup } from "../components/Popup.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { initialCardData } from "../utils/constants.js";
 
@@ -29,7 +31,7 @@ const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
 
 
 
-const photoViewerPopup= new Popup('.photo-viewer');
+const photoViewerPopup= new PopupWithImage('.photo-viewer');
 const profileFormPopup= new Popup('.modal_form_profile');
 const photoFormPopup= new Popup('.modal_form_photo');
 
