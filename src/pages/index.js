@@ -3,6 +3,7 @@ import "./index.css";
 import { Section } from "../components/Section.js";
 import { Card } from "../components/Card.js";
 import { UserInfo } from "../components/UserInfo.js";
+import { Popup } from "../components/Popup.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { initialCardData } from "../utils/constants.js";
 
@@ -10,17 +11,13 @@ import { initialCardData } from "../utils/constants.js";
 // load all DOM elements objects that will be worked with repeatedly
 const profile= document.querySelector('.profile');
 const editInfoButton= profile.querySelector('.profile__edit-info');
-const profileName= profile.querySelector('.profile__name');
-const profileAbout= profile.querySelector('.profile__about');
 const addImageButton= profile.querySelector('.profile__add-image');
 
 const cardContainerSelector= '.photo-grid__list';
 
-const exitButtons= document.querySelectorAll('.popup__exit');
+const photoViewerImage= document.querySelector('.photo-viewer__image');
+const photoViewerCaption= document.querySelector('.photo-viewer__caption');
 
-const photoViewer= document.querySelector('.photo-viewer');
-const photoViewerImage= photoViewer.querySelector('.photo-viewer__image');
-const photoViewerCaption= photoViewer.querySelector('.photo-viewer__caption');
 
 const profileForm= document.querySelector('.modal_form_profile');
 const profileFormName= profileForm.querySelector('.modal__input_type_name');
@@ -30,6 +27,11 @@ const photoForm= document.querySelector('.modal_form_photo');
 const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
 const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
 
+
+
+const photoViewerPopup= new Popup('.photo-viewer');
+const profileFormPopup= new Popup('.modal_form_profile');
+const photoFormPopup= new Popup('.modal_form_photo');
 
 const userInfo= new UserInfo({nameSelector: '.profile__name', aboutSelector: '.profile__about'});
 
@@ -53,45 +55,14 @@ const profileValidator= new FormValidator(profileForm, formSettings);
 
 
 
-/* 
- * Callback function that closes popup when escape key pressed
-*/
-const closePopupOnEsc= (e) => {
-  if(e.target.classList.contains('popup')) exitPopup();
-}
+
+
+
 
 
 
 /* 
- * Callback function that closes popup when overlay clicked
-*/
-const closePopupOnClickAway= (e) => {
-  if(e.key === 'Escape') exitPopup();
-}
-
-
-
-/*
- * Opens a popup, making .popup visible
- *
- * @param {HTMLelement} item - indicates to the specific .popup__item to be made active
-*/
-function openPopup(item) {
-  
-  // add listener with callback to close popup if user clicks on overlay
-  document.addEventListener('click', closePopupOnEsc);
-
-  // add listener with callback to close popup if user presses escape key
-  document.addEventListener('keyup', closePopupOnClickAway);
-	
-	// fade in popup
-	item.parentElement.classList.add('popup_active');
-}
-
-
-
-/* 
- * Opens the profile edit form, calling openPopup()
+ * Opens the profile edit form
 */
 function openProfileForm() {
 
@@ -109,24 +80,24 @@ function openProfileForm() {
   profileValidator.toggleButtonState();
 
 	// fade in the profile form modal
-	openPopup(profileForm);
+	profileFormPopup.open();
 }
 
 
 
 /* 
- * Opens the add photo form, calling openPopup()
+ * Opens the add photo form
 */
 function openPhotoForm() {
 
 	// fade in the profile form modal
-	openPopup(photoForm);
+	photoFormPopup.open();
 }
 
 
 
 /*
- * Opens the photo viewer, calling openPopup()
+ * Opens the photo viewer
  *
  * @param {string} imageSrc - the image src link
  * @param {string} caption - the caption
@@ -137,26 +108,8 @@ const openPhotoViewer= (imageSrc, caption) => {
 	photoViewerImage.alt= caption;
 	photoViewerCaption.textContent= caption;
 	
-	openPopup(photoViewer);
+	photoViewerPopup.open();
 }
-
-
-
-/* 
- * Closes any popup
-*/
-function exitPopup() {
-  const activePopup= document.querySelector('.popup_active');
-  activePopup.classList.remove('popup_active');
-  
-  // remove listener to close popup if user clicks on overlay
-  activePopup.removeEventListener('click', closePopupOnEsc);
-
-  // remove listener to close popup if user presses escape key
-  document.removeEventListener('keyup', closePopupOnClickAway);
-}
-
-
 
 
 
@@ -164,9 +117,7 @@ function exitPopup() {
 editInfoButton.addEventListener("click", openProfileForm);
 addImageButton.addEventListener("click", openPhotoForm);
 
-exitButtons.forEach((button) => {
-	button.addEventListener('click', exitPopup);
-});
+
 
 
 // add submit event to profile form
@@ -176,7 +127,7 @@ profileForm.addEventListener('submit', (e) => {
   // update text content in profile with new data entered into form
   userInfo.setUserInfo({ name: profileFormName.value, about: profileFormAbout.value });
 	
-	exitPopup();
+	profileFormPopup.close();
 });
 
 
@@ -200,7 +151,7 @@ photoForm.addEventListener('submit', (e) => {
   const cardElement= card.generateCard();
   cardsList.addItem(cardElement);
 	
-	exitPopup();
+	photoFormPopup.close();
 });
 
 
