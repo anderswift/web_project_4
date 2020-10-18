@@ -1,6 +1,7 @@
 import "../pages/index.css";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import { Section } from "./Section.js";
 import { initialCardData } from "./initialCardData.js";
 
 
@@ -11,7 +12,7 @@ const profileName= profile.querySelector('.profile__name');
 const profileAbout= profile.querySelector('.profile__about');
 const addImageButton= profile.querySelector('.profile__add-image');
 
-const cardContainer= document.querySelector('.photo-grid__list')
+const cardContainerSelector= '.photo-grid__list';
 
 const exitButtons= document.querySelectorAll('.popup__exit');
 
@@ -39,6 +40,11 @@ const formSettings= {
 // create instances of FormValidator for each form
 const photoValidator= new FormValidator(photoForm, formSettings);
 const profileValidator= new FormValidator(profileForm, formSettings);
+
+
+
+
+
 
 
 
@@ -146,19 +152,6 @@ function exitPopup() {
 
 
 
-/*
- * Adds a photo card to a container element
- * 
- * @param {HTMLelement} container - container element
- * @param {HTMLelement} cardHTML - photo card node ready to insert
- * @param {boolean} [prepend= true] - indicates whether to prepend card to beginning of list or add at the end
-*/
-function renderCard(container, cardElement, prepend= true) {
-	// add the photo to the DOM
-	if (prepend) container.prepend(cardElement);
-	else container.append(cardElement);
-}
-
 
 
 // add click events to connect buttons to functions that open and close popups
@@ -182,28 +175,32 @@ profileForm.addEventListener('submit', (e) => {
 });
 
 
+const cardsList= new Section({ 
+  items: initialCardData,
+  renderer: (item) => {
+    item.photoCallback= openPhotoViewer; 
+    const card= new Card(item);  
+    const cardElement= card.generateCard();
+    cardsList.addItem(cardElement, false);
+  }
+}, cardContainerSelector);
+cardsList.renderItems();
+
+
 // add submit event to photo form
 photoForm.addEventListener('submit', (e) => {
 	e.preventDefault(); 
-	
-  const card= new Card({ 
-    name: photoFormPlace.value, 
-    imageUrl: photoFormImage.value, 
-    photoCallback: openPhotoViewer 
-  });
-	renderCard(cardContainer, card.generateCard());
+  
+  const card= new Card({ name: photoFormPlace.value, imageUrl: photoFormImage.value, photoCallback: openPhotoViewer });  
+  const cardElement= card.generateCard();
+  cardsList.addItem(cardElement);
 	
 	exitPopup();
 });
 
 
 
-// populate .photo-grid__list with initial array of photos and captions
-initialCardData.forEach((setup) => {
-  setup.photoCallback= openPhotoViewer;
-  const card= new Card(setup);
-	renderCard(cardContainer, card.generateCard(), false);
-});
+
 
 
 
