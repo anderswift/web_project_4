@@ -17,8 +17,7 @@ const addImageButton= profile.querySelector('.profile__add-image');
 
 const cardContainerSelector= '.photo-grid__list';
 
-const photoViewerImage= document.querySelector('.photo-viewer__image');
-const photoViewerCaption= document.querySelector('.photo-viewer__caption');
+
 
 
 const profileForm= document.querySelector('.modal_form_profile');
@@ -106,11 +105,9 @@ function openPhotoForm() {
 */
 const openPhotoViewer= (imageSrc, caption) => {
 	//load photo into viewer
-	photoViewerImage.src= imageSrc;
-	photoViewerImage.alt= caption;
-	photoViewerCaption.textContent= caption;
 	
-	photoViewerPopup.open();
+	
+	photoViewerPopup.open({ image: imageSrc, caption: caption });
 }
 
 
