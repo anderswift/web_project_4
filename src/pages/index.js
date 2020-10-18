@@ -1,7 +1,9 @@
 import "./index.css";
-import { Card } from "../components/Card.js";
-import { FormValidator } from "../components/FormValidator.js";
+
 import { Section } from "../components/Section.js";
+import { Card } from "../components/Card.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { FormValidator } from "../components/FormValidator.js";
 import { initialCardData } from "../utils/constants.js";
 
 
@@ -27,6 +29,9 @@ const profileFormAbout= profileForm.querySelector('.modal__input_type_about');
 const photoForm= document.querySelector('.modal_form_photo');
 const photoFormPlace= photoForm.querySelector('.modal__input_type_place');
 const photoFormImage= photoForm.querySelector('.modal__input_type_imgsrc');
+
+
+const userInfo= new UserInfo({nameSelector: '.profile__name', aboutSelector: '.profile__about'});
 
 
 // settings for form validation objects
@@ -90,9 +95,10 @@ function openPopup(item) {
 */
 function openProfileForm() {
 
-	// load the existing content values into the form
-	profileFormName.value= profileName.textContent;
-	profileFormAbout.value= profileAbout.textContent;
+  // load the existing content values into the form
+  const info= userInfo.getUserInfo();
+	profileFormName.value= info.name;
+	profileFormAbout.value= info.about;
   
   // run validation checks to ensure initial form state is correct
   const profileFields= [profileFormName, profileFormAbout];
@@ -167,9 +173,8 @@ exitButtons.forEach((button) => {
 profileForm.addEventListener('submit', (e) => {
 	e.preventDefault(); 
 	
-	// update text content in profile with new data entered into form
-	profileName.textContent= profileFormName.value;
-	profileAbout.textContent= profileFormAbout.value;
+  // update text content in profile with new data entered into form
+  userInfo.setUserInfo({ name: profileFormName.value, about: profileFormAbout.value });
 	
 	exitPopup();
 });
