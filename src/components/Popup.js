@@ -5,8 +5,6 @@ export class Popup {
     this._popup= this._popupItem.parentElement;
     this._handleEscClose= this._handleEscClose.bind(this);
     this._handleClickClose= this._handleClickClose.bind(this);
-
-    this._setEventListeners();
   }
 
   open() {
@@ -19,7 +17,7 @@ export class Popup {
     document.removeEventListener('keyup', this._handleEscClose);
   }
 
-  _setEventListeners() {
+  setEventListeners() {
     document.addEventListener('click', this._handleClickClose);
   }
 

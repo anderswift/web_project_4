@@ -1,11 +1,13 @@
 export class Card {
-  constructor(setup) {
-    this._name= setup.name;
-    this._imageUrl= setup.imageUrl;
-    this._photoCallback= setup.photoCallback;
+  constructor(setup, handleClick) {
+    this._place= setup.place;
+    this._imgsrc= setup.imgsrc;
+
     setup.templateSelector ? 
       this._templateSelector= setup.templateSelector : 
       this._templateSelector= '#photo-template';
+
+    this._handleClick= handleClick;
   }
 
   _getTemplate() {
@@ -36,18 +38,18 @@ export class Card {
 
   _setPhotoPreviewListener(image) {
     image.addEventListener('click', (e) => {
-      this._photoCallback(this._imageUrl, this._name);
+      this._handleClick({imgsrc: this._imgsrc, place: this._place});
     });
   }
 
   generateCard() {
     this._element= this._getTemplate();
 
-    this._element.querySelector('.photo__caption').textContent= this._name;
+    this._element.querySelector('.photo__caption').textContent= this._place;
 
     const image= this._element.querySelector('.photo__image');
-    image.src= this._imageUrl;
-    image.alt= this._name;
+    image.src= this._imgsrc;
+    image.alt= this._place;
 
     this._setEventListeners(image);
 
