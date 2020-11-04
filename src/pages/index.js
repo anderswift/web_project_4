@@ -6,15 +6,27 @@ import { UserInfo } from "../components/UserInfo.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { FormValidator } from "../components/FormValidator.js";
+import { Api } from "../components/Api.js";
 
 import { 
-  initialCardData, 
   formSettings, 
   cardContainerSelector, 
   imagePopupSelector, profileFormSelector, photoFormSelector,
   editInfoButton, addImageButton,
   photoForm, profileForm, profileFormFields
  } from "../utils/constants.js";
+
+
+
+const api= new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-6/",
+  headers: {
+    authorization: "95a5b594-7318-496e-ada2-f96a00133f51",
+    "Content-Type": "application/json"
+  }
+}); 
+
+
 
 
 
@@ -76,17 +88,27 @@ editInfoButton.addEventListener('click', () => {
 
 
 
-// create Section instance, generate and render Cards from initialCardData list
-const cardsList= new Section({ 
-  items: initialCardData,
-  renderer: (item) => {
-    const card= new Card(item, openPhotoViewer);  
-    const cardElement= card.generateCard();
-    cardsList.addItem(cardElement, false);
-  }
-}, cardContainerSelector);
+api.getInitialCards((initialCardData) => {
+  
+  const cardsList= new Section({ 
+    items: initialCardData,
+    renderer: (item) => {
+      const card= new Card(item, openPhotoViewer);  
+      const cardElement= card.generateCard();
+      cardsList.addItem(cardElement, false);
+      
+    }
+  }, cardContainerSelector);
+  
+  cardsList.renderItems();
+  
+});
 
-cardsList.renderItems();
+
+
+
+// create Section instance, generate and render Cards from initialCardData list
+
 
 
 

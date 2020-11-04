@@ -1,7 +1,10 @@
 export class Card {
   constructor(setup, handleClick) {
-    this._place= setup.place;
-    this._imgsrc= setup.imgsrc;
+    this._place= setup.name;
+    this._imgsrc= setup.link;
+    this._id= setup._id;
+    this._owner= setup.owner._id;
+    this._likes= setup.likes;
 
     setup.templateSelector ? 
       this._templateSelector= setup.templateSelector : 
@@ -32,6 +35,7 @@ export class Card {
   _setLikeListener() {
     this._element.querySelector('.photo__like').addEventListener('click', (e) => {
       e.target.classList.toggle('photo__like_on');
+      console.log(e.target.data);
       e.target.blur();
     });
   }
@@ -42,14 +46,22 @@ export class Card {
     });
   }
 
-  generateCard() {
+  generateCard(owner) {
     this._element= this._getTemplate();
-
     this._element.querySelector('.photo__caption').textContent= this._place;
 
     const image= this._element.querySelector('.photo__image');
     image.src= this._imgsrc;
     image.alt= this._place;
+    this._element.querySelector('.photo__like').data= this._id;
+    if(this._owner === owner) console.log('owned');
+    else console.log('not owned');
+
+    console.log(this._likes.length);
+
+    if(this._likes.includes(owner)) console.log('liked');
+    else console.log('not liked');
+
 
     this._setEventListeners(image);
 
