@@ -6,11 +6,3 @@
   background-size: 23px 19px;
   padding-top: 20px;
 }
-
-.photo__like-count {
-  display: block;
-  font-size: 13px;
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
-  font-weight: 500;
-  line-height: 16px;
-}
