@@ -27,7 +27,29 @@ export class Api {
     });
   } 
 
+  test() {
+    return fetch(this._baseUrl + 'cards', {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: "Forest",
+        link: "https://images.pexels.com/photos/2440061/pexels-photo-2440061.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      })
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } 
+      return Promise.reject(`Error: ${res.status}`);
+    });
+    
+    
+  }
+
+
 }
+
+
+
 
 /**
  * Loading user information:

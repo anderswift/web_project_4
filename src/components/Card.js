@@ -4,7 +4,7 @@ export class Card {
     this._link= setup.link;
     this._id= setup._id;
     this._owner= setup.owner._id;
-    this._likes= setup.likes;
+    this._likes= setup.likes.map((user) => { return user._id; });
 
     setup.templateSelector ? 
       this._templateSelector= setup.templateSelector : 
@@ -27,9 +27,12 @@ export class Card {
   }
 
   _setDeleteListener() {
-    this._element.querySelector('.photo__delete').addEventListener('click', (e) => {
-      e.target.parentNode.remove();
-    });
+    const deleteButton= this._element.querySelector('.photo__delete');
+    if(deleteButton) {
+      deleteButton.addEventListener('click', (e) => {
+        e.target.parentNode.remove();
+      });
+    }
   }
 
   _setLikeListener() {
@@ -53,14 +56,16 @@ export class Card {
     const image= this._element.querySelector('.photo__image');
     image.src= this._link;
     image.alt= this._name;
-    this._element.querySelector('.photo__like').data= this._id;
-    if(this._owner === owner) console.log('owned');
-    else console.log('not owned');
 
-    console.log(this._likes.length);
+    const likeButton= this._element.querySelector('.photo__like');
+    likeButton.data= this._id;
 
-    if(this._likes.includes(owner)) console.log('liked');
-    else console.log('not liked');
+    if(this._likes.includes(owner)) likeButton.classList.add('photo__like_on');
+    this._element.querySelector('.photo__like-count').textContent= this._likes.length;
+
+    const deleteButton= this._element.querySelector('.photo__delete');
+    if(this._owner === owner) deleteButton.data= this._id;
+    else deleteButton.remove();
 
 
     this._setEventListeners(image);

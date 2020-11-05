@@ -27,6 +27,7 @@ const api= new Api({
   }
 }); 
 
+//api.test().then((data) => { console.log(data); } );
 
 const cardsList= new Section({ 
   items: {},
@@ -40,8 +41,8 @@ const cardsList= new Section({
 
 // retrieve initial card data from api, create Section instance, generate and render Cards
 api.getInitialCards().then((initialCardData) => {
-
-  cardsList._items= initialCardData;
+  //console.log(initialCardData);
+  cardsList._items= initialCardData; /******** update this later *********/
   cardsList.renderItems();
 
 }).catch((err) => {
@@ -53,7 +54,6 @@ api.getInitialCards().then((initialCardData) => {
 const userInfo= new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__about', avatarSelector: '.profile__avatar' });
 
 api.getUserInfo().then((data) => {
-  console.log(data);
   userInfo.setUserInfo(data);
   userInfo.setUserAvatar(data.avatar);
 });

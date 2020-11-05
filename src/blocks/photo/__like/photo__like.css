@@ -1,7 +1,16 @@
 .photo__like {
 	display: block;
 	width: 23px;
-	height: 22px;
-	background: url(../../../images/like.svg) 50% 2px no-repeat;
-	background-size: 23px 19px;
+	height: 36px;
+	background: url(../../../images/like.svg) 50% 0 no-repeat;
+  background-size: 23px 19px;
+  padding-top: 20px;
+}
+
+.photo__like-count {
+  display: block;
+  font-size: 13px;
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 16px;
 }
