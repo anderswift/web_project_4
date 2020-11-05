@@ -21,9 +21,9 @@
 			<section class="profile">
 				<img class="profile__avatar" src="./images/avatar.png" alt="Avatar">
 				<div class="profile__info">
-					<h1 class="profile__name">Jacques Cousteau</h1>
+					<h1 class="profile__name"></h1>
 					<button type="button" class="profile__edit-info button" aria-label="Edit profile"></button>
-					<p class="profile__about">Explorer</p>
+					<p class="profile__about"></p>
 				</div>
 				
 				<button type="button" class="profile__add-image button" aria-label="Add image"></button>
@@ -71,11 +71,11 @@
 			
 			<h3 class="modal__heading">New place</h3>
 			
-			<input type="text" name="photo-place" id="photo-place" class="modal__input modal__input_type_place" aria-label="Title" placeholder="Title" minlength="2" maxlength="30" required>
-      <span class="modal__error" id="photo-place-error"></span>
+			<input type="text" name="photo-name" id="photo-name" class="modal__input modal__input_type_name" aria-label="Title" placeholder="Title" minlength="2" maxlength="30" required>
+      <span class="modal__error" id="photo-name-error"></span>
       
-      <input type="url" name="photo-imgsrc" id="photo-imgsrc" class="modal__input modal__input_type_imgsrc" aria-label="Image link" placeholder="Image link" required>
-			<span class="modal__error" id="photo-imgsrc-error"></span>
+      <input type="url" name="photo-link" id="photo-link" class="modal__input modal__input_type_link" aria-label="Image link" placeholder="Image link" required>
+			<span class="modal__error" id="photo-link-error"></span>
       
       <button type="submit" class="button modal__button modal__button_type_create modal__button_disabled" name="photo-submit">Create</button>
 			
@@ -95,7 +95,7 @@
 	</div>
 	
 	<template id="photo-template">
-		<li class="photo" id="0">
+		<li class="photo">
 			<img class="photo__image">
 			<div class="photo__meta">
 				<h2 class="photo__caption"></h2>

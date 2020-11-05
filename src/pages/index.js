@@ -13,7 +13,8 @@ import {
   cardContainerSelector, 
   imagePopupSelector, profileFormSelector, photoFormSelector,
   editInfoButton, addImageButton,
-  photoForm, profileForm, profileFormFields
+  photoForm, profileForm, profileFormFields,
+  userId
  } from "../utils/constants.js";
 
 
@@ -27,12 +28,33 @@ const api= new Api({
 }); 
 
 
+const cardsList= new Section({ 
+  items: {},
+  renderer: (item) => {
+    const card= new Card(item, openPhotoViewer);  
+    const cardElement= card.generateCard(userId);
+    cardsList.addItem(cardElement, false);
+  }
+}, cardContainerSelector);
 
+
+// retrieve initial card data from api, create Section instance, generate and render Cards
+api.getInitialCards().then((initialCardData) => {
+
+  cardsList._items= initialCardData;
+  cardsList.renderItems();
+
+}).catch((err) => {
+  console.log(err);
+});
 
 
  // create userInfo object to handle getting and setting profile information
 const userInfo= new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__about' });
 
+api.getUserInfo().then((data) => {
+  userInfo.setUserInfo(data);
+});
 
 
 // store photo popup callback
@@ -53,6 +75,10 @@ const profileFormPopup= new PopupWithForm(profileFormSelector,
 
 const photoFormPopup= new PopupWithForm(photoFormSelector, 
   (data) => {
+    data._id= '12345678';
+    data.owner= { };
+    data.owner._id= userId;
+    data.likes= [];
     const card= new Card(data, openPhotoViewer);  
     const cardElement= card.generateCard();
     cardsList.addItem(cardElement);
@@ -88,26 +114,8 @@ editInfoButton.addEventListener('click', () => {
 
 
 
-api.getInitialCards((initialCardData) => {
-  
-  const cardsList= new Section({ 
-    items: initialCardData,
-    renderer: (item) => {
-      const card= new Card(item, openPhotoViewer);  
-      const cardElement= card.generateCard();
-      cardsList.addItem(cardElement, false);
-      
-    }
-  }, cardContainerSelector);
-  
-  cardsList.renderItems();
-  
-});
 
 
-
-
-// create Section instance, generate and render Cards from initialCardData list
 
 
 

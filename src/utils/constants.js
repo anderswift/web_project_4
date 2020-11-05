@@ -1,12 +1,4 @@
-// initial set of photo cards, to be loaded dynamically
-export const initialCardData = [
-  { place: 'Yosemite Valley', imgsrc: 'https://code.s3.yandex.net/web-code/yosemite.jpg' },
-  { place: 'Lake Louise', imgsrc: 'https://code.s3.yandex.net/web-code/lake-louise.jpg' },
-  { place: 'Bald Mountains', imgsrc: 'https://code.s3.yandex.net/web-code/bald-mountains.jpg' },
-  { place: 'Latemar', imgsrc: 'https://code.s3.yandex.net/web-code/latemar.jpg' },
-  { place: 'Vanoise National Park', imgsrc: 'https://code.s3.yandex.net/web-code/vanoise.jpg' },
-  { place: 'Lago di Braies', imgsrc: 'https://code.s3.yandex.net/web-code/lago.jpg' }
-];
+export const userId= 'b37fe6643c10107d4cbaa30f';
 
 export const formSettings= {
   inputSelector: '.modal__input',

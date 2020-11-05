@@ -1,7 +1,7 @@
 export class Card {
   constructor(setup, handleClick) {
-    this._place= setup.name;
-    this._imgsrc= setup.link;
+    this._name= setup.name;
+    this._link= setup.link;
     this._id= setup._id;
     this._owner= setup.owner._id;
     this._likes= setup.likes;
@@ -42,17 +42,17 @@ export class Card {
 
   _setPhotoPreviewListener(image) {
     image.addEventListener('click', (e) => {
-      this._handleClick({imgsrc: this._imgsrc, place: this._place});
+      this._handleClick({link: this._link, name: this._name});
     });
   }
 
   generateCard(owner) {
     this._element= this._getTemplate();
-    this._element.querySelector('.photo__caption').textContent= this._place;
+    this._element.querySelector('.photo__caption').textContent= this._name;
 
     const image= this._element.querySelector('.photo__image');
-    image.src= this._imgsrc;
-    image.alt= this._place;
+    image.src= this._link;
+    image.alt= this._name;
     this._element.querySelector('.photo__like').data= this._id;
     if(this._owner === owner) console.log('owned');
     else console.log('not owned');

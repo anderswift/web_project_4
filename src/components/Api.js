@@ -5,18 +5,25 @@ export class Api {
     this._headers= headers;
   }
   
-  getInitialCards(handleCards) {
-    return fetch(this._baseUrl+'cards/', {
+  getInitialCards() {
+    return fetch(this._baseUrl + 'cards', {
       headers: this._headers
     }).then(res => {
       if (res.ok) {
         return res.json();
       } 
       return Promise.reject(`Error: ${res.status}`);
-    }).then((cardData) => {
-      handleCards(cardData);
-    }).catch((err) => {
-      console.log(err);
+    });
+  } 
+
+  getUserInfo() {
+    return fetch(this._baseUrl + 'users/me', {
+      headers: this._headers
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } 
+      return Promise.reject(`Error: ${res.status}`);
     });
   } 
 

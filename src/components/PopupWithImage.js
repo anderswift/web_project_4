@@ -11,10 +11,10 @@ export class PopupWithImage extends Popup {
     this._photoViewerCaption= document.querySelector('.photo-viewer__caption');
   }
 
-  open({ place, imgsrc }) {
-    this._photoViewerImage.src= imgsrc;
-    this._photoViewerImage.alt= place;
-    this._photoViewerCaption.textContent= place;
+  open({ name, link }) {
+    this._photoViewerImage.src= link;
+    this._photoViewerImage.alt= name;
+    this._photoViewerCaption.textContent= name;
 
     super.open();
   }
