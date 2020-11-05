@@ -50,10 +50,12 @@ api.getInitialCards().then((initialCardData) => {
 
 
  // create userInfo object to handle getting and setting profile information
-const userInfo= new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__about' });
+const userInfo= new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__about', avatarSelector: '.profile__avatar' });
 
 api.getUserInfo().then((data) => {
+  console.log(data);
   userInfo.setUserInfo(data);
+  userInfo.setUserAvatar(data.avatar);
 });
 
 
