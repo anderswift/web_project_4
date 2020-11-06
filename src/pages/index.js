@@ -28,49 +28,65 @@ const api= new Api({
 }); 
 
 
-const cardsList= new Section({ 
-  items: {},
-  renderer: (item) => {
-    const card= new Card(item, openPhotoViewer);  
-    const cardElement= card.generateCard(userId);
-    cardsList.addItem(cardElement, false);
-  }
-}, cardContainerSelector);
-
-
-// retrieve initial card data from api, create Section instance, generate and render Cards
-api.getInitialCards().then((initialCardData) => {
-  cardsList._items= initialCardData; /******** update this later *********/
-  cardsList.renderItems();
-
-}).catch((err) => {
-  console.log(err);
-});
-
-
- // create userInfo object to handle getting and setting profile information
-const userInfo= new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__about', avatarSelector: '.profile__avatar' });
-
-api.getUserInfo().then((data) => {
-  userInfo.setUserInfo(data);
-  userInfo.setUserAvatar(data.avatar);
-});
-
 
 // store photo popup callback
 const openPhotoViewer= (data) => {
 	photoViewerPopup.open(data);
 }
 
+// store like callback
+const updateCardLikes= (cardId, liked) => {
+  if (liked) return api.addLike(cardId);
+  else return api.removeLike(cardId);
+}
 
 
-// create Popup objects for photo viewer, profile form and photo form
+
+
+
+// create Section instance
+const cardsList= new Section({ 
+  items: {},
+  renderer: (item) => {
+    const card= new Card(item, { handleClick: openPhotoViewer, handleLike: updateCardLikes });  
+    const cardElement= card.generateCard(userId);
+    cardsList.addItem(cardElement, false);
+  }
+}, cardContainerSelector);
+
+// retrieve initial card data from api, generate and render Cards
+api.getInitialCards().then((initialCardData) => {
+  cardsList._items= initialCardData; /******** update this later *********/
+  cardsList.renderItems();
+}).catch((err) => {
+  console.log(err);
+});
+
+
+
+ // create userInfo object to handle getting and setting profile information
+const userInfo= new UserInfo({ 
+  nameSelector: '.profile__name', 
+  aboutSelector: '.profile__about', 
+  avatarSelector: '.profile__avatar' 
+});
+
+// set initial profile info from data retrieved from server
+api.getUserInfo().then((data) => {
+  userInfo.setUserInfo(data);
+  userInfo.setUserAvatar(data.avatar);
+});
+
+
+
+
+
+// create Popup objects for photo viewer, profile form, avatar form and photo form
 const photoViewerPopup= new PopupWithImage(imagePopupSelector);
 
 const profileFormPopup= new PopupWithForm(profileFormSelector, 
   (data) => {
-    api.setUserInfo(data).then((response) => {
-      console.log(response);
+    api.setUserInfo(data).then((res) => {
       userInfo.setUserInfo(data);
       profileFormPopup.close();
     }).catch((err) => { console.log(err); });
@@ -78,8 +94,7 @@ const profileFormPopup= new PopupWithForm(profileFormSelector,
 
 const avatarFormPopup= new PopupWithForm(avatarFormSelector, 
   (data) => {
-    api.setUserAvatar(data).then((response) => {
-      console.log(response);
+    api.setUserAvatar(data).then((res) => {
       userInfo.setUserAvatar(data.avatar);
       avatarFormPopup.close();
     }).catch((err) => { console.log(err); });
@@ -126,12 +141,6 @@ editInfoButton.addEventListener('click', () => {
 
   profileFormPopup.open();
 });
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,5 @@
 export class Card {
-  constructor(setup, handleClick) {
+  constructor(setup, { handleClick, handleLike }) {
     this._name= setup.name;
     this._link= setup.link;
     this._id= setup._id;
@@ -11,6 +11,7 @@ export class Card {
       this._templateSelector= '#photo-template';
 
     this._handleClick= handleClick;
+    this._handleLike= handleLike;
   }
 
   _getTemplate() {
@@ -37,9 +38,16 @@ export class Card {
 
   _setLikeListener() {
     this._element.querySelector('.photo__like').addEventListener('click', (e) => {
-      e.target.classList.toggle('photo__like_on');
-      console.log(e.target.data);
-      e.target.blur();
+
+      // determine if user is liking or unliking photo
+      const liked= !e.target.classList.contains('photo__like_on');
+
+      this._handleLike(e.target.data, liked).then((response) => {
+        e.target.classList.toggle('photo__like_on');
+        e.target.querySelector('.photo__like-count').textContent= response.likes.length;
+        e.target.blur();
+      });
+      
     });
   }
 
