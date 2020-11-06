@@ -11,9 +11,9 @@ import { Api } from "../components/Api.js";
 import { 
   formSettings, 
   cardContainerSelector, 
-  imagePopupSelector, profileFormSelector, photoFormSelector,
-  editInfoButton, addImageButton,
-  photoForm, profileForm, profileFormFields,
+  imagePopupSelector, profileFormSelector, avatarFormSelector, photoFormSelector,
+  editInfoButton, editAvatarButton, addImageButton,
+  photoForm, profileForm, avatarForm, profileFormFields,
   userId
  } from "../utils/constants.js";
 
@@ -75,6 +75,11 @@ const profileFormPopup= new PopupWithForm(profileFormSelector,
     profileFormPopup.close();
   });
 
+const avatarFormPopup= new PopupWithForm(avatarFormSelector, 
+  (data) => {
+    avatarFormPopup.close();
+  });
+
 const photoFormPopup= new PopupWithForm(photoFormSelector, 
   (data) => {
     data._id= '12345678';
@@ -93,12 +98,17 @@ const photoFormPopup= new PopupWithForm(photoFormSelector,
 // create instances of FormValidator for each form
 const photoValidator= new FormValidator(photoForm, formSettings);
 const profileValidator= new FormValidator(profileForm, formSettings);
-
+const avatarValidator= new FormValidator(avatarForm, formSettings);
 
 
 // add click event listeners to buttons that open forms
 addImageButton.addEventListener("click", () => { 
   photoFormPopup.open(); 
+});
+
+editAvatarButton.addEventListener('click', () => {
+  console.log('hellooooo');
+  avatarFormPopup.open();
 });
 
 editInfoButton.addEventListener('click', () => {
@@ -121,11 +131,10 @@ editInfoButton.addEventListener('click', () => {
 
 
 
-
 // start validation
 photoValidator.enableValidation();
 profileValidator.enableValidation();
-
+avatarValidator.enableValidation();
 
 
 // Without initial state of "display:none" popups briefly flash on screen while page is loading.
