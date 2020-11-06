@@ -27,24 +27,50 @@ export class Api {
     });
   } 
 
-  test() {
+  setNewCard(data) {
+    console.log(data);
+    console.log('hello');
+    /*
     return fetch(this._baseUrl + 'cards', {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
         name: "Forest",
-        link: "https://images.pexels.com/photos/2440061/pexels-photo-2440061.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        link: link
       })
     }).then(res => {
       if (res.ok) {
         return res.json();
       } 
       return Promise.reject(`Error: ${res.status}`);
-    });
-    
-    
+    }); */
   }
 
+  setUserInfo(data) {
+    return fetch(this._baseUrl + 'users/me', {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(data)
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } 
+      return Promise.reject(`Error: ${res.status}`);
+    }); 
+  }
+
+  setUserAvatar(data) {
+    return fetch(this._baseUrl + 'users/me/avatar', {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(data)
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } 
+      return Promise.reject(`Error: ${res.status}`);
+    }); 
+  }
 
 }
 

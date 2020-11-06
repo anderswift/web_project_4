@@ -27,7 +27,6 @@ const api= new Api({
   }
 }); 
 
-//api.test().then((data) => { console.log(data); } );
 
 const cardsList= new Section({ 
   items: {},
@@ -41,7 +40,6 @@ const cardsList= new Section({
 
 // retrieve initial card data from api, create Section instance, generate and render Cards
 api.getInitialCards().then((initialCardData) => {
-  //console.log(initialCardData);
   cardsList._items= initialCardData; /******** update this later *********/
   cardsList.renderItems();
 
@@ -71,13 +69,20 @@ const photoViewerPopup= new PopupWithImage(imagePopupSelector);
 
 const profileFormPopup= new PopupWithForm(profileFormSelector, 
   (data) => {
-    userInfo.setUserInfo(data);
-    profileFormPopup.close();
+    api.setUserInfo(data).then((response) => {
+      console.log(response);
+      userInfo.setUserInfo(data);
+      profileFormPopup.close();
+    }).catch((err) => { console.log(err); });
   });
 
 const avatarFormPopup= new PopupWithForm(avatarFormSelector, 
   (data) => {
-    avatarFormPopup.close();
+    api.setUserAvatar(data).then((response) => {
+      console.log(response);
+      userInfo.setUserAvatar(data.avatar);
+      avatarFormPopup.close();
+    }).catch((err) => { console.log(err); });
   });
 
 const photoFormPopup= new PopupWithForm(photoFormSelector, 
@@ -107,7 +112,6 @@ addImageButton.addEventListener("click", () => {
 });
 
 editAvatarButton.addEventListener('click', () => {
-  console.log('hellooooo');
   avatarFormPopup.open();
 });
 
