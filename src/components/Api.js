@@ -27,23 +27,17 @@ export class Api {
     });
   } 
 
-  setNewCard(data) {
-    console.log(data);
-    console.log('hello');
-    /*
+  addNewCard(data) {
     return fetch(this._baseUrl + 'cards', {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({
-        name: "Forest",
-        link: link
-      })
+      body: JSON.stringify(data)
     }).then(res => {
       if (res.ok) {
         return res.json();
       } 
       return Promise.reject(`Error: ${res.status}`);
-    }); */
+    }); 
   }
 
 

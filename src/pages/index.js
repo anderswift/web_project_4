@@ -102,15 +102,14 @@ const avatarFormPopup= new PopupWithForm(avatarFormSelector,
 
 const photoFormPopup= new PopupWithForm(photoFormSelector, 
   (data) => {
-    data._id= '12345678';
-    data.owner= { };
-    data.owner._id= userId;
-    data.likes= [];
-    const card= new Card(data, cardCallbacks);  
-    const cardElement= card.generateCard();
-    cardsList.addItem(cardElement);
+    api.addNewCard(data).then((response) => {
+      const card= new Card(response, cardCallbacks);  
+      const cardElement= card.generateCard(userId);
+      cardsList.addItem(cardElement);
+      
+      photoFormPopup.close();
+    });
     
-    photoFormPopup.close();
   });
 
 

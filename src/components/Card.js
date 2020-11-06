@@ -45,6 +45,9 @@ export class Card {
       this._handleLike(e.target.data, liked).then((response) => {
         e.target.classList.toggle('photo__like_on');
         e.target.querySelector('.photo__like-count').textContent= response.likes.length;
+      }).catch((err) => {
+        console.log(err);
+      }).finally(() => {
         e.target.blur();
       });
       
