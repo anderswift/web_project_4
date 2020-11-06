@@ -40,7 +40,7 @@ const updateCardLikes= (cardId, liked) => {
   else return api.removeLike(cardId);
 }
 
-
+const cardCallbacks= { handleClick: openPhotoViewer, handleLike: updateCardLikes };
 
 
 
@@ -48,7 +48,7 @@ const updateCardLikes= (cardId, liked) => {
 const cardsList= new Section({ 
   items: {},
   renderer: (item) => {
-    const card= new Card(item, { handleClick: openPhotoViewer, handleLike: updateCardLikes });  
+    const card= new Card(item, cardCallbacks);  
     const cardElement= card.generateCard(userId);
     cardsList.addItem(cardElement, false);
   }
@@ -106,7 +106,7 @@ const photoFormPopup= new PopupWithForm(photoFormSelector,
     data.owner= { };
     data.owner._id= userId;
     data.likes= [];
-    const card= new Card(data, openPhotoViewer);  
+    const card= new Card(data, cardCallbacks);  
     const cardElement= card.generateCard();
     cardsList.addItem(cardElement);
     
