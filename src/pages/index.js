@@ -40,7 +40,12 @@ const updateCardLikes= (cardId, liked) => {
   else return api.removeLike(cardId);
 }
 
-const cardCallbacks= { handleClick: openPhotoViewer, handleLike: updateCardLikes };
+// store delete callback
+const deleteCard= (cardId) => {
+  return api.deleteCard(cardId);
+}
+
+const cardCallbacks= { handleClick: openPhotoViewer, handleLike: updateCardLikes, handleDelete: deleteCard };
 
 
 
@@ -102,7 +107,7 @@ const avatarFormPopup= new PopupWithForm(avatarFormSelector,
 
 const photoFormPopup= new PopupWithForm(photoFormSelector, 
   (data) => {
-    api.addNewCard(data).then((response) => {
+    api.addCard(data).then((response) => {
       const card= new Card(response, cardCallbacks);  
       const cardElement= card.generateCard(userId);
       cardsList.addItem(cardElement);

@@ -1,5 +1,5 @@
 export class Card {
-  constructor(setup, { handleClick, handleLike }) {
+  constructor(setup, { handleClick, handleLike, handleDelete }) {
     this._name= setup.name;
     this._link= setup.link;
     this._id= setup._id;
@@ -12,6 +12,7 @@ export class Card {
 
     this._handleClick= handleClick;
     this._handleLike= handleLike;
+    this._handleDelete= handleDelete;
   }
 
   _getTemplate() {
@@ -31,7 +32,12 @@ export class Card {
     const deleteButton= this._element.querySelector('.photo__delete');
     if(deleteButton) {
       deleteButton.addEventListener('click', (e) => {
-        e.target.parentNode.remove();
+        this._handleDelete(e.target.data).then((response) => {
+          console.log(response);
+          e.target.parentNode.remove();
+        }).catch((err) => {
+          console.log(err);
+        });
       });
     }
   }
