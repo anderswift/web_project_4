@@ -5,6 +5,7 @@ export class Api {
     this._headers= headers;
   }
   
+  
   getInitialCards() {
     return fetch(this._baseUrl + 'cards', {
       headers: this._headers
@@ -16,6 +17,7 @@ export class Api {
     });
   } 
 
+
   getUserInfo() {
     return fetch(this._baseUrl + 'users/me', {
       headers: this._headers
@@ -26,6 +28,7 @@ export class Api {
       return Promise.reject(`Error: ${res.status}`);
     });
   } 
+
 
   addCard(data) {
     return fetch(this._baseUrl + 'cards', {
@@ -39,6 +42,7 @@ export class Api {
       return Promise.reject(`Error: ${res.status}`);
     }); 
   }
+
 
   deleteCard(cardId) {
     return fetch(this._baseUrl + 'cards/' + cardId, {
@@ -64,6 +68,7 @@ export class Api {
       return Promise.reject(`Error: ${res.status}`);
     }); 
   }
+
 
   removeLike(cardId) {
     return fetch(this._baseUrl + 'cards/likes/' + cardId, {
@@ -108,26 +113,10 @@ export class Api {
 }
 
 
-
-
-/**
- * Loading user information:
- * GET https://around.nomoreparties.co/v1/${groupId}/users/me 
- * 
- * Loading cards from server:
- * GET https://around.nomoreparties.co/v1/${groupId}/cards 
- * 
- * Editing user info
- * PATCH https://around.nomoreparties.co/v1/${groupId}/users/me 
- * 
- * Editing profile picture
- * PATCH https://around.nomoreparties.co/v1/groupId/users/me/avatar 
- * 
- * Adding new card
- * POST https://around.nomoreparties.co/v1/${groupId}/cards 
- * 
- * Delete a card
- * DELETE https://around.nomoreparties.co/v1/${groupId}/cards/${cardId} 
- * 
- */
-
+export const api= new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-6/",
+  headers: {
+    authorization: "95a5b594-7318-496e-ada2-f96a00133f51",
+    "Content-Type": "application/json"
+  }
+}); 

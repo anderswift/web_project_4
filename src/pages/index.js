@@ -6,7 +6,7 @@ import { UserInfo } from "../components/UserInfo.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { FormValidator } from "../components/FormValidator.js";
-import { Api } from "../components/Api.js";
+import { Api, api } from "../components/Api.js";
 
 import { 
   formSettings, 
@@ -16,16 +16,6 @@ import {
   photoForm, profileForm, avatarForm, profileFormFields, deleteCardIdField,
   userId
  } from "../utils/constants.js";
-
-
-
-const api= new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-6/",
-  headers: {
-    authorization: "95a5b594-7318-496e-ada2-f96a00133f51",
-    "Content-Type": "application/json"
-  }
-}); 
 
 
 
@@ -52,7 +42,7 @@ const cardCallbacks= { handleClick: openPhotoViewer, handleLike: updateCardLikes
 
 // create Section instance
 const cardsList= new Section({ 
-  items: {},
+  items: {}, // empty to start, so cardsList constant can exist independent of api calls
   renderer: (item) => {
     const card= new Card(item, cardCallbacks);  
     const cardElement= card.generateCard(userId);
@@ -62,8 +52,7 @@ const cardsList= new Section({
 
 // retrieve initial card data from api, generate and render Cards
 api.getInitialCards().then((initialCardData) => {
-  cardsList._items= initialCardData; /******** update this later *********/
-  cardsList.renderItems();
+  cardsList.renderItems(initialCardData);
 }).catch((err) => {
   console.log(err);
 });
@@ -85,13 +74,12 @@ api.getUserInfo().then((data) => {
 
 
 
-
-
 // create Popup objects for photo viewer, profile form, avatar form and photo form
 const photoViewerPopup= new PopupWithImage(imagePopupSelector);
 
 const profileFormPopup= new PopupWithForm(profileFormSelector, 
   (data) => {
+    profileFormPopup.saving();
     api.setUserInfo(data).then((res) => {
       userInfo.setUserInfo(data);
       profileFormPopup.close();
@@ -100,6 +88,7 @@ const profileFormPopup= new PopupWithForm(profileFormSelector,
 
 const avatarFormPopup= new PopupWithForm(avatarFormSelector, 
   (data) => {
+    avatarFormPopup.saving();
     api.setUserAvatar(data).then((res) => {
       userInfo.setUserAvatar(data.avatar);
       avatarFormPopup.close();
@@ -108,21 +97,23 @@ const avatarFormPopup= new PopupWithForm(avatarFormSelector,
 
 const photoFormPopup= new PopupWithForm(photoFormSelector, 
   (data) => {
+    photoFormPopup.saving();
     api.addCard(data).then((response) => {
       const card= new Card(response, cardCallbacks);  
       const cardElement= card.generateCard(userId);
       cardsList.addItem(cardElement);
       
       photoFormPopup.close();
-    });
+    }).catch((err) => { console.log(err); });
   });
 
 const deleteFormPopup= new PopupWithForm(deleteFormSelector, 
   (data) => {
+    deleteFormPopup.saving();
     api.deleteCard(data.id).then((response) => {
       document.getElementById(data.id).remove();
       deleteFormPopup.close();
-    });
+    }).catch((err) => { console.log(err); });
   });
 
 
@@ -131,6 +122,7 @@ const deleteFormPopup= new PopupWithForm(deleteFormSelector,
 const photoValidator= new FormValidator(photoForm, formSettings);
 const profileValidator= new FormValidator(profileForm, formSettings);
 const avatarValidator= new FormValidator(avatarForm, formSettings);
+
 
 
 // add click event listeners to buttons that open forms
@@ -162,5 +154,6 @@ profileValidator.enableValidation();
 avatarValidator.enableValidation();
 
 
-// Without initial state of "display:none" popups briefly flash on screen while page is loading.
+
+// Without initial state of "display:none" popups briefly flash on screen while page is loading
 document.querySelectorAll('.popup').forEach((popup) => { popup.style.display= 'flex'; });

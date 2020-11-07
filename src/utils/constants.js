@@ -15,7 +15,7 @@ export const avatarFormSelector= '.modal_form_avatar';
 export const photoFormSelector= '.modal_form_photo';
 export const deleteFormSelector= '.modal_form_delete';
 
-// load all DOM elements objphotoFormSelectorects that will be worked with repeatedly
+// load all DOM elements that will be worked with repeatedly
 export const editInfoButton= document.querySelector('.profile__edit-info');
 export const editAvatarButton= document.querySelector('.profile__edit-avatar');
 export const addImageButton= document.querySelector('.profile__add-image');

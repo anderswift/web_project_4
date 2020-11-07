@@ -1,4 +1,5 @@
 export class FormValidator {
+
   constructor(formElement, settings) {
     this._formElement= formElement;
     this._inputSelector= settings.inputSelector;
@@ -72,9 +73,9 @@ export class FormValidator {
       this._resetValidationMessages();
     });
 
-
     this._setupValidationListeners();
   }
+
 }
 
 
