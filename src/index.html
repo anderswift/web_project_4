@@ -99,6 +99,19 @@
 		</form>
   </div>
 
+  <div class="popup">
+		<form name="photo-form" class="popup__item modal modal_form_delete">
+			
+			<h3 class="modal__heading">Are you sure?</h3>
+			
+			<input type="hidden" name="delete-id" id="delete-id" class="modal__input modal__input_type_delete" required>
+      
+      <button type="submit" class="button modal__button modal__button_type_delete" name="delete-submit">Yes</button>
+			
+			<button type="reset" class="popup__exit button" aria-label="Cancel"></button>
+		</form>
+  </div>
+
 
   <div class="popup popup_dark">  
     <div class="popup__item photo-viewer">

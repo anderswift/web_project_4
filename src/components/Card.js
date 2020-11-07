@@ -32,12 +32,8 @@ export class Card {
     const deleteButton= this._element.querySelector('.photo__delete');
     if(deleteButton) {
       deleteButton.addEventListener('click', (e) => {
-        this._handleDelete(e.target.data).then((response) => {
-          console.log(response);
-          e.target.parentNode.remove();
-        }).catch((err) => {
-          console.log(err);
-        });
+        console.log(e.target.data);
+        this._handleDelete(e.target.data);
       });
     }
   }
@@ -68,6 +64,7 @@ export class Card {
 
   generateCard(owner) {
     this._element= this._getTemplate();
+    this._element.querySelector('.photo').id= this._id;
     this._element.querySelector('.photo__caption').textContent= this._name;
 
     const image= this._element.querySelector('.photo__image');

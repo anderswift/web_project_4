@@ -11,9 +11,9 @@ import { Api } from "../components/Api.js";
 import { 
   formSettings, 
   cardContainerSelector, 
-  imagePopupSelector, profileFormSelector, avatarFormSelector, photoFormSelector,
+  imagePopupSelector, profileFormSelector, avatarFormSelector, photoFormSelector, deleteFormSelector,
   editInfoButton, editAvatarButton, addImageButton,
-  photoForm, profileForm, avatarForm, profileFormFields,
+  photoForm, profileForm, avatarForm, profileFormFields, deleteCardIdField,
   userId
  } from "../utils/constants.js";
 
@@ -42,7 +42,8 @@ const updateCardLikes= (cardId, liked) => {
 
 // store delete callback
 const deleteCard= (cardId) => {
-  return api.deleteCard(cardId);
+  deleteCardIdField.value= cardId;
+  deleteFormPopup.open(); 
 }
 
 const cardCallbacks= { handleClick: openPhotoViewer, handleLike: updateCardLikes, handleDelete: deleteCard };
@@ -114,7 +115,14 @@ const photoFormPopup= new PopupWithForm(photoFormSelector,
       
       photoFormPopup.close();
     });
-    
+  });
+
+const deleteFormPopup= new PopupWithForm(deleteFormSelector, 
+  (data) => {
+    api.deleteCard(data.id).then((response) => {
+      document.getElementById(data.id).remove();
+      deleteFormPopup.close();
+    });
   });
 
 
