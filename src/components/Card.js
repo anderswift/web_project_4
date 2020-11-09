@@ -59,6 +59,7 @@ export class Card {
     this._element.querySelector('.photo__caption').textContent= this._name;
 
     const image= this._element.querySelector('.photo__image');
+    image.onerror= this._removeCard; // remove cards with broken images from DOM
     image.src= this._link;
     image.alt= this._name;
 
@@ -75,6 +76,10 @@ export class Card {
     this._setEventListeners(image);
 
     return this._element;
+  }
+
+  _removeCard(e) {
+    e.target.parentElement.remove();
   }
 
 }
