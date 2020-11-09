@@ -41,23 +41,8 @@ export class Card {
     }
   }
 
-
   _setLikeListener() {
-    this._element.querySelector('.photo__like').addEventListener('click', (e) => {
-
-      // determine if user is liking or unliking photo
-      const liked= !e.target.classList.contains('photo__like_on');
-
-      this._handleLike(e.target.data, liked).then((response) => {
-        e.target.classList.toggle('photo__like_on');
-        e.target.querySelector('.photo__like-count').textContent= response.likes.length;
-      }).catch((err) => {
-        console.log(err);
-      }).finally(() => {
-        e.target.blur();
-      });
-      
-    });
+    this._element.querySelector('.photo__like').addEventListener('click', this._handleLike);
   }
 
 

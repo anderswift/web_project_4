@@ -1,5 +1,3 @@
-export const userId= 'b37fe6643c10107d4cbaa30f';
-
 export const formSettings= {
   inputSelector: '.modal__input',
   submitButtonSelector: '.modal__button',

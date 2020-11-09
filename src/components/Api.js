@@ -55,24 +55,14 @@ export class Api {
       return Promise.reject(`Error: ${res.status}`);
     }); 
   }
+  
 
+  updateLikes(cardId, liked) {
+    let method= 'DELETE';
+    if(liked) method= 'PUT';
 
-  addLike(cardId) {
     return fetch(this._baseUrl + 'cards/likes/' + cardId, {
-      method: "PUT",
-      headers: this._headers
-    }).then(res => {
-      if (res.ok) {
-        return res.json();
-      } 
-      return Promise.reject(`Error: ${res.status}`);
-    }); 
-  }
-
-
-  removeLike(cardId) {
-    return fetch(this._baseUrl + 'cards/likes/' + cardId, {
-      method: "DELETE",
+      method: method,
       headers: this._headers
     }).then(res => {
       if (res.ok) {
